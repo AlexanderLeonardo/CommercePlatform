@@ -1,10 +1,11 @@
 package commercePlatform.orderService.domain.PaymentStrategy;
 
-import commercePlatform.orderService.interfaces.Payment;
+import jakarta.persistence.Entity;
 
 import java.math.BigDecimal;
 
-public class MercadoPagoPayment implements Payment {
+@Entity
+public class MercadoPagoPayment extends Payment {
 
     @Override
     public BigDecimal applyDiscount(BigDecimal total) {

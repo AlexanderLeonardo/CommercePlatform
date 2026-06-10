@@ -9,12 +9,9 @@ import commercePlatform.orderService.domain.PaymentStrategy.MercadoPagoPayment;
 import commercePlatform.orderService.exception.CannotCancelOrderException;
 import commercePlatform.orderService.exception.CannotModifyOrderException;
 import commercePlatform.orderService.exception.EmptyOrderException;
-import commercePlatform.orderService.exception.InsufficientStockException;
 import commercePlatform.orderService.gateway.InMemoryOrderGateway;
 import commercePlatform.orderService.gateway.OrderGateway;
 import commercePlatform.orderService.service.ConfirmedOrderService;
-import commercePlatform.productService.domain.Product;
-import commercePlatform.userService.domain.User;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

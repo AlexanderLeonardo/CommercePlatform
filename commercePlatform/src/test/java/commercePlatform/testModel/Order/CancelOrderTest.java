@@ -7,8 +7,6 @@ import commercePlatform.orderService.exception.CannotAddOrderItemException;
 import commercePlatform.orderService.gateway.InMemoryOrderGateway;
 import commercePlatform.orderService.gateway.OrderGateway;
 import commercePlatform.orderService.service.CancelOrderService;
-import commercePlatform.productService.domain.Product;
-import commercePlatform.userService.domain.User;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

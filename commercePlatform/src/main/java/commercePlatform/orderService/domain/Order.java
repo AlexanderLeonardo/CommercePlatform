@@ -1,23 +1,31 @@
 package commercePlatform.orderService.domain;
 
 import commercePlatform.orderService.exception.*;
-import commercePlatform.orderService.interfaces.Payment;
-import commercePlatform.userService.domain.User;
+import commercePlatform.orderService.domain.PaymentStrategy.Payment;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Entity
+@Table(name = "ORDERS")
 public class Order {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long userId;
     private String userName;
     private String userEmail;
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
     private BigDecimal total;
+    @OneToMany
+    @JoinColumn(name="order_id")
     private List<OrderItem> items;  // representa los productos que tiene el pedido
+    @OneToOne
     private Payment paymentMethod;
 
     public Order(Long id, Long userId, String userName, String userEmail, BigDecimal total, Payment paymentMethod) {
@@ -99,9 +107,7 @@ public class Order {
     }
 
     public void addOrderItem(OrderItem orderItem){
-        /* Primero verificar que haya stock disponible del producto
-           Después, verificar que el estado de la orden sea "CREATED"
-        * */
+        // Primero verificar que el estado de la orden sea "CREATED" para agregar un nuevo producto al pedido
         verifyOrderStateForAddOrderItem();
         items.add(orderItem);
         updateOrderTotal(orderItem.calculateSubtotal());
@@ -123,7 +129,7 @@ public class Order {
     }
 
     public void confirmedOrder(){
-        // Primero verificar que el pedido no esté vacio. Si está vacio, arrojar una excepción
+        // Primero verificar que el pedido no esté vacío. Si está vacío, arrojar una excepción
         // del tipo "EmptyOrderException"
         verifyOrderNotEmpty();
         String updateTotal = paymentMethod.applyDiscount(total).stripTrailingZeros().toPlainString();

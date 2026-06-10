@@ -3,7 +3,6 @@ package commercePlatform.testModel.OrderItem;
 import commercePlatform.orderService.gateway.InMemoryOrderItemGateway;
 import commercePlatform.orderService.gateway.OrderItemGateway;
 import commercePlatform.orderService.domain.OrderItem;
-import commercePlatform.productService.domain.Product;
 import commercePlatform.orderService.service.CreateOrderItemService;
 import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;

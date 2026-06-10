@@ -2,21 +2,16 @@ package commercePlatform.testModel.Order;
 
 import commercePlatform.orderService.domain.OrderItem;
 import commercePlatform.orderService.domain.PaymentStrategy.MercadoPagoPayment;
-import commercePlatform.orderService.exception.InsufficientStockException;
 import commercePlatform.orderService.gateway.InMemoryOrderGateway;
 import commercePlatform.orderService.gateway.OrderGateway;
-import commercePlatform.orderService.service.ConfirmedOrderService;
 import commercePlatform.orderService.service.CreateOrderService;
 import commercePlatform.orderService.domain.Order;
 import commercePlatform.orderService.domain.OrderStatus;
-import commercePlatform.productService.domain.Product;
-import commercePlatform.userService.domain.User;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CreateOrderTest {
 
@@ -70,3 +65,4 @@ public class CreateOrderTest {
         assertEquals(OrderStatus.CANCELLED, orderDean.getStatus());
     }
 }
+

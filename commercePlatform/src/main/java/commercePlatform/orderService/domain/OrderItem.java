@@ -1,11 +1,15 @@
 package commercePlatform.orderService.domain;
 
-import commercePlatform.productService.domain.Product;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
+@Entity
+@Table(name = "ORDER_ITEM")
 public class OrderItem {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long productId;
     private String productName;

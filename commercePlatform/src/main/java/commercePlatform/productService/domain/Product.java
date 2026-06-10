@@ -2,11 +2,16 @@ package commercePlatform.productService.domain;
 
 import commercePlatform.productService.exception.InvalidPriceException;
 import commercePlatform.productService.exception.InvalidStockException;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
+@Entity
+@Table(name = "PRODUCT")
 public class Product {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String description;
