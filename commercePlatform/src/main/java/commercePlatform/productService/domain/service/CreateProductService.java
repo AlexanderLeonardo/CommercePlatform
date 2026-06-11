@@ -1,7 +1,7 @@
-package commercePlatform.productService.service;
+package commercePlatform.productService.domain.service;
 
-import commercePlatform.productService.gateway.ProductGateway;
-import commercePlatform.productService.domain.Product;
+import commercePlatform.productService.domain.gateway.ProductGateway;
+import commercePlatform.productService.domain.model.Product;
 
 public class CreateProductService {
 

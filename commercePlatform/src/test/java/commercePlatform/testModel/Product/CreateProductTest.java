@@ -2,10 +2,10 @@ package commercePlatform.testModel.Product;
 
 import commercePlatform.productService.exception.InvalidPriceException;
 import commercePlatform.productService.exception.InvalidStockException;
-import commercePlatform.productService.gateway.InMemoryProductGateway;
-import commercePlatform.productService.gateway.ProductGateway;
-import commercePlatform.productService.domain.Product;
-import commercePlatform.productService.service.CreateProductService;
+import commercePlatform.productService.domain.gateway.InMemoryProductGateway;
+import commercePlatform.productService.domain.gateway.ProductGateway;
+import commercePlatform.productService.domain.model.Product;
+import commercePlatform.productService.domain.service.CreateProductService;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

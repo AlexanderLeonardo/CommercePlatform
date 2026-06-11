@@ -1,6 +1,6 @@
-package commercePlatform.productService.gateway;
+package commercePlatform.productService.domain.gateway;
 
-import commercePlatform.productService.domain.Product;
+import commercePlatform.productService.domain.model.Product;
 
 public interface ProductGateway {
 
