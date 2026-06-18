@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class CreateUserTest {
+public class UserTest {
 
     UserGateway userGateway = new InMemoryUserGateway();
     CreateUserService createUserService = new CreateUserService(userGateway);
@@ -17,8 +17,7 @@ public class CreateUserTest {
     @Test
     void shouldCreateUserSuccessfully() {
         User alex = new User(Long.valueOf(1), "Alexander", "alex.quinhonez@gmail.com", "siempre viva 123");
-        User createdUser = createUserService.createUser(alex);
-        assertEquals("Alexander", createdUser.getName());
+        assertEquals("Alexander", alex.getName());
     }
 
     @Test

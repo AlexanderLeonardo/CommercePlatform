@@ -9,9 +9,6 @@ import commercePlatform.orderService.domain.PaymentStrategy.MercadoPagoPayment;
 import commercePlatform.orderService.exception.CannotCancelOrderException;
 import commercePlatform.orderService.exception.CannotModifyOrderException;
 import commercePlatform.orderService.exception.EmptyOrderException;
-import commercePlatform.orderService.gateway.InMemoryOrderGateway;
-import commercePlatform.orderService.gateway.OrderGateway;
-import commercePlatform.orderService.service.ConfirmedOrderService;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -21,13 +18,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ConfirmedOrderTest {
 
-    OrderGateway gateway = new InMemoryOrderGateway();
-    ConfirmedOrderService service = new ConfirmedOrderService(gateway);
-
     @Test
     void shouldNotConfirmEmptyOrder(){
         Order orderCastiel = new Order(1L, 1L, "Castiel", "cass.angel@gmail.com", BigDecimal.ZERO, new CashPayment());
-        assertThrows(EmptyOrderException.class, () -> service.confirmedOrder(orderCastiel));
+        assertThrows(EmptyOrderException.class, orderCastiel::confirmedOrder);
     }
 
     @Test
@@ -37,18 +31,18 @@ public class ConfirmedOrderTest {
         OrderItem orderItemPendrive = new OrderItem(2L, 2L, "Pendrive", BigDecimal.valueOf(10), 2);
         orderSam.addOrderItem(orderItemHeadphones);
         orderSam.addOrderItem(orderItemPendrive);
-        service.confirmedOrder(orderSam);
+        orderSam.confirmedOrder();
         assertEquals(OrderStatus.CONFIRMED, orderSam.getStatus());
     }
 
     @Test
     void shouldNotModifyOrderInConfirmedState(){
-        Order orderCrowlie = new Order(3L, 3L, "Crowlie","crowlie.kingofhell@gmail.com", BigDecimal.ZERO, new CashPayment());
+        Order orderCrowley = new Order(3L, 3L, "Crowlie","crowlie.kingofhell@gmail.com", BigDecimal.ZERO, new CashPayment());
         OrderItem orderItemSmartTv = new OrderItem(3L, 3L, "SmartTv",BigDecimal.valueOf(430), 1);
-        orderCrowlie.addOrderItem(orderItemSmartTv);
-        service.confirmedOrder(orderCrowlie);
+        orderCrowley.addOrderItem(orderItemSmartTv);
+        orderCrowley.confirmedOrder();
         assertThrows(CannotModifyOrderException.class,
-                () -> service.modifyOrderItemWithId(orderCrowlie, 3L, 3));
+                () -> orderCrowley.modifyOrderItemWithId(3L, 3));
     }
 
     @Test
@@ -56,9 +50,9 @@ public class ConfirmedOrderTest {
         Order orderKevin = new Order(4L, 4L, "Kevin", "kevin.profeta@gmail.com", BigDecimal.ZERO, new MercadoPagoPayment());
         OrderItem orderItemLaptop = new OrderItem(4L, 4L,"Laptop", BigDecimal.valueOf(800), 1);
         orderKevin.addOrderItem(orderItemLaptop);
-        service.confirmedOrder(orderKevin);
+        orderKevin.confirmedOrder();
         assertThrows(CannotCancelOrderException.class,
-                () -> service.cancelOrder(orderKevin));
+                orderKevin::cancelOrder);
     }
 
     @Test
@@ -66,7 +60,7 @@ public class ConfirmedOrderTest {
         Order orderKevin = new Order(5L, 4L, "Kevin", "kevin.profeta@gmail.com", BigDecimal.ZERO, new CashPayment());
         OrderItem orderItemMouse = new OrderItem(5L, 5L, "Mouse", BigDecimal.valueOf(25), 3);
         orderKevin.addOrderItem(orderItemMouse);
-        service.confirmedOrder(orderKevin);
+        orderKevin.confirmedOrder();
         assertEquals(BigDecimal.valueOf(63.75), orderKevin.getTotal());
     }
 }

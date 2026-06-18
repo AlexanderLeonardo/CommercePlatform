@@ -2,11 +2,10 @@ package commercePlatform.productService.domain.gateway;
 
 import commercePlatform.productService.domain.model.Product;
 
+import java.util.List;
+
 public interface ProductGateway {
 
-    Product saveProduct(Product product);
-
-    Product decreaseStock(Product product, int quantity);
-
-    Product deactivateProduct(Product product);
+    Product createProduct(Product product);
+    List<Product> getAllProducts();
 }

@@ -7,6 +7,8 @@ import commercePlatform.productService.infrastructure.mapper.ProductEntityMapper
 import commercePlatform.productService.infrastructure.repository.JpaProductRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class JpaProductRepositoryAdapter implements ProductGateway {
 
@@ -20,19 +22,16 @@ public class JpaProductRepositoryAdapter implements ProductGateway {
 
 
     @Override
-    public Product saveProduct(Product product) {
+    public Product createProduct(Product product) {
         ProductEntity entity = mapper.toEntity(product);
         ProductEntity saved = repository.save(entity);
         return mapper.toDomain(saved);
     }
 
     @Override
-    public Product decreaseStock(Product product, int quantity) {
-        return null;
-    }
-
-    @Override
-    public Product deactivateProduct(Product product) {
-        return null;
+    public List<Product> getAllProducts() {
+        return repository.findAll().stream()
+                .map(mapper::toDomain)
+                .toList();
     }
 }

@@ -10,20 +10,15 @@ public class InMemoryProductGateway implements ProductGateway {
     private final List<Product> products = new ArrayList<>();
 
     @Override
-    public Product saveProduct(Product product) {
+    public Product createProduct(Product product) {
         products.add(product);
         return product;
     }
 
     @Override
-    public Product decreaseStock(Product product, int quantity) {
-        product.decreaseStock(quantity);
-        return product;
+    public List<Product> getAllProducts() {
+        return products;
     }
 
-    @Override
-    public Product deactivateProduct(Product product) {
-        product.deactivate();
-        return product;
-    }
+
 }
