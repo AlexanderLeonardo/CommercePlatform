@@ -5,13 +5,17 @@ import java.math.BigDecimal;
 public class ProductRequest {
 
     private String name;
+    private String description;
     private BigDecimal price;
     private int stock;
+    private boolean active;
 
-    public ProductRequest(String name, BigDecimal price, int stock) {
+    public ProductRequest(String name, String description, BigDecimal price, int stock, boolean active) {
         this.name = name;
+        this.description = description;
         this.price = price;
         this.stock = stock;
+        this.active = active;
     }
 
     public String getName() {
@@ -36,5 +40,21 @@ public class ProductRequest {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

@@ -23,9 +23,6 @@ public class ProductController {
         this.mapper = mapper;
     }
 
-    // CHEQUEAR QUE LA DB ESTE VACIA!!
-    // AGREGAR VALIDACIONES EN EL SERVICIO
-
     @PostMapping
     public ProductResponse createProduct(@RequestBody ProductRequest productRequest){
         Product product = mapper.toDomain(productRequest);
@@ -37,4 +34,6 @@ public class ProductController {
     public List<Product> getAllProducts(){
         return service.getAllProducts();
     }
+
+    // IMPLEMENTAR UPDATE DE PRODUCTO!!
 }
