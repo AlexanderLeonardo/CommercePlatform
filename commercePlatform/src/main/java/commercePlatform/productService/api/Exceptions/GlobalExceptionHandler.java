@@ -1,6 +1,7 @@
 package commercePlatform.productService.api.Exceptions;
 
 import commercePlatform.productService.exception.InvalidPriceException;
+import commercePlatform.productService.exception.InvalidStockException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -11,9 +12,9 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(InvalidPriceException.class)
+    @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<?> handleInvalidPrice(
-            InvalidPriceException ex) {
+            RuntimeException ex) {
 
         Map<String, String> response = new HashMap<>();
         response.put("error", ex.getMessage());

@@ -10,4 +10,10 @@ public class ProductValidator {
         product.validationPrice(product.getPrice());
         product.validationStock(product.getStock());
     }
+
+    public void existOrNotExistProduct(boolean existProduct){
+        if(!existProduct){
+            throw new RuntimeException("No encontré el producto");
+        }
+    }
 }
