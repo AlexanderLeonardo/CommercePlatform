@@ -1,6 +1,8 @@
 package commercePlatform.productService.api.controller;
 
 
+import commercePlatform.productService.api.dto.request.DecreaseStockProductRequest;
+import commercePlatform.productService.api.dto.request.PatchProductRequest;
 import commercePlatform.productService.api.dto.request.ProductRequest;
 import commercePlatform.productService.api.dto.request.UpdateStockProductRequest;
 import commercePlatform.productService.api.dto.response.ProductResponse;
@@ -45,14 +47,39 @@ public class ProductController {
     @PutMapping("/{id}")
     public ProductResponse updateProduct(@PathVariable Long id, @RequestBody ProductRequest productRequest){
         Product product = mapper.toDomain(productRequest);
-        Product update = service.updateProduct(id, product);
-        return mapper.toResponse(update);
+        Product updated = service.updateProduct(id, product);
+        return mapper.toResponse(updated);
     }
 
     @PatchMapping("/{id}")
+    public ProductResponse partialUpdate(@PathVariable Long id, @RequestBody PatchProductRequest patchProductRequest){
+        Product partialUpdate = service.partialUpdateProduct(id, patchProductRequest);
+        return mapper.toResponse(partialUpdate);
+    }
+
+    @PatchMapping("/{id}/stock/set")
     public ProductResponse modifyStock(@PathVariable Long id, @RequestBody UpdateStockProductRequest updateStockRequest){
         int updatedStock = updateStockRequest.getStock();
-        Product updateProduct = service.modifyStock(id, updatedStock);
-        return mapper.toResponse(updateProduct);
+        Product updatedProduct = service.modifyStock(id, updatedStock);
+        return mapper.toResponse(updatedProduct);
+    }
+
+    @PatchMapping("/{id}/stock/decrease")
+    public ProductResponse decreaseStock(@PathVariable Long id, @RequestBody DecreaseStockProductRequest decreaseStockRequest){
+        int quantityDecrease = decreaseStockRequest.getQuantity();
+        Product decreaseStockProduct = service.decreaseStock(id, quantityDecrease);
+        return mapper.toResponse(decreaseStockProduct);
+    }
+
+    @PatchMapping("{id}/deactivate")
+    public ProductResponse deactivate(@PathVariable Long id){
+        Product deactivateProduct = service.deactivate(id);
+        return mapper.toResponse(deactivateProduct);
+    }
+
+    @PatchMapping("{id}/activate")
+    public ProductResponse activate(@PathVariable Long id){
+        Product activateProduct = service.activate(id);
+        return mapper.toResponse(activateProduct);
     }
 }

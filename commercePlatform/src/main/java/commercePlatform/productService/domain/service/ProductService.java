@@ -1,5 +1,6 @@
 package commercePlatform.productService.domain.service;
 
+import commercePlatform.productService.api.dto.request.PatchProductRequest;
 import commercePlatform.productService.api.validator.ProductValidator;
 import commercePlatform.productService.domain.gateway.ProductGateway;
 import commercePlatform.productService.domain.model.Product;
@@ -41,12 +42,48 @@ public class ProductService {
         updateProduct.setPrice(updatedProduct.getPrice());
         updateProduct.setStock(updatedProduct.getStock());
         updateProduct.setActive(updatedProduct.isActive());
+        productValidator.validate(updateProduct);
         return productGateway.saveProduct(updateProduct);
+    }
+
+    public Product partialUpdateProduct(Long productId, PatchProductRequest patchProductRequest){
+        Product partialUpdateProduct = getProductById(productId);
+        if(patchProductRequest.getName() != null){
+            partialUpdateProduct.setName(patchProductRequest.getName());
+        }
+        if(patchProductRequest.getDescription() != null){
+            partialUpdateProduct.setDescription(patchProductRequest.getDescription());
+        }
+        if(patchProductRequest.getPrice() !=  null){
+            partialUpdateProduct.setPrice(patchProductRequest.getPrice());
+        }
+        productValidator.validate(partialUpdateProduct);
+        return productGateway.saveProduct(partialUpdateProduct);
     }
 
     public Product modifyStock(Long productId, int newStock){
         Product updateStockProduct = getProductById(productId);
         updateStockProduct.setStock(newStock);
+        productValidator.validate(updateStockProduct);
         return productGateway.saveProduct(updateStockProduct);
+    }
+
+    public Product decreaseStock(Long productId, int quantity){
+        Product decreaseStockProduct = getProductById(productId);
+        decreaseStockProduct.decreaseStock(quantity);
+        productValidator.validate(decreaseStockProduct);
+        return productGateway.saveProduct(decreaseStockProduct);
+    }
+
+    public Product deactivate(Long productId){
+        Product deactivateProduct = getProductById(productId);
+        deactivateProduct.deactivate();
+        return productGateway.saveProduct(deactivateProduct);
+    }
+
+    public Product activate(Long productId){
+        Product activateProduct = getProductById(productId);
+        activateProduct.activate();
+        return productGateway.saveProduct(activateProduct);
     }
 }

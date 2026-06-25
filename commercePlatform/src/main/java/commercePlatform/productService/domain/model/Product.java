@@ -1,8 +1,8 @@
 package commercePlatform.productService.domain.model;
 
+import commercePlatform.productService.exception.InsufficientStockException;
 import commercePlatform.productService.exception.InvalidPriceException;
 import commercePlatform.productService.exception.InvalidStockException;
-import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
@@ -79,12 +79,18 @@ public class Product {
     }
 
     public void decreaseStock(int quantity){
-        validationStock(stock - quantity);  // First check new stock
+        if(quantity > stock){ // First check new stock
+            throw new InsufficientStockException();
+        }
         stock -= quantity;
     }
 
     public void deactivate(){
         active = false;
+    }
+
+    public void activate(){
+        active = true;
     }
 
     public void validationPrice(BigDecimal price){
