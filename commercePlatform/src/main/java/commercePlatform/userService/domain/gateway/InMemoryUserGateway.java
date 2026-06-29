@@ -1,6 +1,6 @@
-package commercePlatform.userService.gateway;
+package commercePlatform.userService.domain.gateway;
 
-import commercePlatform.userService.domain.User;
+import commercePlatform.userService.domain.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,6 @@ public class InMemoryUserGateway implements UserGateway {
         return user;
     }
 
-    @Override
     public boolean existByEmail(String mail) {
         return users.stream().anyMatch(usr -> usr.getEmail().equals(mail));
     }

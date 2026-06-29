@@ -1,4 +1,4 @@
-package commercePlatform.userService.domain;
+package commercePlatform.userService.domain.model;
 
 import jakarta.persistence.*;
 

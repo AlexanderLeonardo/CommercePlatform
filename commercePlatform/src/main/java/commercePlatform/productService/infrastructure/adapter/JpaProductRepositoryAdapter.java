@@ -40,4 +40,9 @@ public class JpaProductRepositoryAdapter implements ProductGateway {
     public Optional<Product> findById(Long id) {
         return repository.findById(id).map(mapper::toDomain);
     }
+
+    @Override
+    public void deleteProduct(Long id) {
+        repository.deleteById(id);
+    }
 }

@@ -9,6 +9,7 @@ import commercePlatform.productService.api.dto.response.ProductResponse;
 import commercePlatform.productService.api.mapper.ProductMapper;
 import commercePlatform.productService.domain.model.Product;
 import commercePlatform.productService.domain.service.ProductService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -81,5 +82,12 @@ public class ProductController {
     public ProductResponse activate(@PathVariable Long id){
         Product activateProduct = service.activate(id);
         return mapper.toResponse(activateProduct);
+    }
+
+    @SuppressWarnings("NullableProblems")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        service.deleteProduct(id);
+        return ResponseEntity.noContent().build();
     }
 }

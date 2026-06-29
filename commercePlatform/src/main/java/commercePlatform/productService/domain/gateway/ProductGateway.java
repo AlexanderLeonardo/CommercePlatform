@@ -10,5 +10,5 @@ public interface ProductGateway {
     Product saveProduct(Product product);
     List<Product> getAllProducts();
     Optional<Product> findById(Long id);
-
+    void deleteProduct(Long id);
 }

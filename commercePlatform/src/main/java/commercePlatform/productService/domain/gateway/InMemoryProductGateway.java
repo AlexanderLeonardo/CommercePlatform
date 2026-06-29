@@ -1,6 +1,7 @@
 package commercePlatform.productService.domain.gateway;
 
 import commercePlatform.productService.domain.model.Product;
+import commercePlatform.productService.exception.ProductNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,5 +29,11 @@ public class InMemoryProductGateway implements ProductGateway {
                 .findFirst()
                 .orElse(null);
         return Optional.ofNullable(product);
+    }
+
+    @Override
+    public void deleteProduct(Long id) {
+        Product product = findById(id).orElseThrow(() -> new ProductNotFoundException(id));
+        products.remove(product);
     }
 }
