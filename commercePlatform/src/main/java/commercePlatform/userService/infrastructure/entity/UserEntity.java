@@ -3,7 +3,7 @@ package commercePlatform.userService.infrastructure.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "USERS")
 public class UserEntity {
 
     @Id

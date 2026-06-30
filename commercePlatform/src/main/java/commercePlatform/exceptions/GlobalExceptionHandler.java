@@ -1,7 +1,5 @@
-package commercePlatform.productService.api.Exceptions;
+package commercePlatform.exceptions;
 
-import commercePlatform.productService.exception.InvalidPriceException;
-import commercePlatform.productService.exception.InvalidStockException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

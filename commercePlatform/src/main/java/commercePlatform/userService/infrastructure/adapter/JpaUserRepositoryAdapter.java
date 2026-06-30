@@ -7,6 +7,8 @@ import commercePlatform.userService.infrastructure.mapper.UserEntityMapper;
 import commercePlatform.userService.infrastructure.repository.JpaUserRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class JpaUserRepositoryAdapter implements UserGateway {
 
@@ -23,7 +25,12 @@ public class JpaUserRepositoryAdapter implements UserGateway {
         UserEntity userEntity = mapper.toEntity(user);
         repository.save(userEntity);
         return mapper.toDomain(userEntity);
-        /* Implementar lógica que verifique si existe un usuario ya creado con la misma cuenta de mail
-        * configurada como atributo */
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return repository.findAll().stream()
+                .map(mapper::toDomain)
+                .toList();
     }
 }

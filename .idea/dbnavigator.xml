@@ -11,10 +11,10 @@
   </component>
   <component name="DBNavigator.Project.DatabaseAssistantManager">
     <assistants>
-      <assistant-state connection-id="5bf084ba-915a-4c91-9120-3d7c88f3f63a" assistant-type="PUBLIC" default-profile-name="" selected-chat-id="" availability="AVAILABLE" acknowledgement="NONE" selected="true">
+      <assistant-state connection-id="5bf084ba-915a-4c91-9120-3d7c88f3f63a" assistant-type="SELECT_AI" default-profile-name="" selected-chat-id="" availability="UNAVAILABLE" acknowledgement="NONE">
         <tools />
       </assistant-state>
-      <assistant-state connection-id="5bf084ba-915a-4c91-9120-3d7c88f3f63a" assistant-type="SELECT_AI" default-profile-name="" selected-chat-id="" availability="UNAVAILABLE" acknowledgement="NONE">
+      <assistant-state connection-id="5bf084ba-915a-4c91-9120-3d7c88f3f63a" assistant-type="PUBLIC" default-profile-name="" selected-chat-id="" availability="AVAILABLE" acknowledgement="NONE" selected="true">
         <tools />
       </assistant-state>
     </assistants>
@@ -30,8 +30,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="5bf084ba-915a-4c91-9120-3d7c88f3f63a">
-      <console name="CommercePlatformDB" type="STANDARD" schema="commerceplatform" session="Main"><![CDATA[select * from product
-where id = 1;]]></console>
+      <console name="CommercePlatformDB" type="STANDARD" schema="commerceplatform" session="Main"><![CDATA[DROP TABLE USER;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">

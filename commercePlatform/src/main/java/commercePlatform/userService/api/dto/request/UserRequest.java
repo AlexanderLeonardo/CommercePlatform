@@ -1,29 +1,15 @@
-package commercePlatform.userService.domain.model;
+package commercePlatform.userService.api.dto.request;
 
-public class User {
+public class UserRequest {
 
-    private Long id;
     private String name;
     private String email;
     private String address;
 
-    public User(Long id, String name, String email, String address) {
-        this.id = id;
+    public UserRequest(String name, String email, String address) {
         this.name = name;
         this.email = email;
         this.address = address;
-    }
-
-    public User(){
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {

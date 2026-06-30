@@ -1,21 +1,17 @@
-package commercePlatform.userService.domain.model;
+package commercePlatform.userService.api.dto.response;
 
-public class User {
+public class UserResponse {
 
     private Long id;
     private String name;
     private String email;
     private String address;
 
-    public User(Long id, String name, String email, String address) {
+    public UserResponse(Long id, String name, String email, String address) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.address = address;
-    }
-
-    public User(){
-
     }
 
     public Long getId() {
@@ -38,7 +34,7 @@ public class User {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setMail(String email) {
         this.email = email;
     }
 

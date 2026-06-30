@@ -19,4 +19,9 @@ public class InMemoryUserGateway implements UserGateway {
         return users.stream().anyMatch(usr -> usr.getEmail().equals(mail));
     }
 
+    @Override
+    public List<User> getAllUsers() {
+        return users;
+    }
+
 }
