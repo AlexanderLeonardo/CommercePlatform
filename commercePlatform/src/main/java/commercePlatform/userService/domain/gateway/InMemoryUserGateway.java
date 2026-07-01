@@ -27,7 +27,11 @@ public class InMemoryUserGateway implements UserGateway {
 
     @Override
     public Optional<User> getUserById(Long id) {
-        return null;
+        User user = users.stream()
+                .filter(usr -> usr.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+        return Optional.ofNullable(user);
     }
 
     @Override
