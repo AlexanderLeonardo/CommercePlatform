@@ -4,6 +4,7 @@ import commercePlatform.userService.domain.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class InMemoryUserGateway implements UserGateway {
 
@@ -22,6 +23,16 @@ public class InMemoryUserGateway implements UserGateway {
     @Override
     public List<User> getAllUsers() {
         return users;
+    }
+
+    @Override
+    public Optional<User> getUserById(Long id) {
+        return null;
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+
     }
 
 }

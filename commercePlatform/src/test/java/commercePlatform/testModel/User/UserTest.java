@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class UserTest {
 
     UserGateway userGateway = new InMemoryUserGateway();
-    UserService createUserService = new UserService(userGateway);
+    UserService userService = new UserService(userGateway);
 
     @Test
     void shouldCreateUserSuccessfully() {
@@ -20,16 +20,15 @@ public class UserTest {
         assertEquals("Alexander", alex.getName());
     }
 
-    /*
+
     @Test
     void shouldNotCreateUserWithEmailAlreadyExist(){
         User dean = new User(2L, "Dean", "dean.winchester@gmail.com", "kansas 666");
-        User userSaved = createUserService.createUser(dean);
+        User userSaved = userService.createUser(dean);
         System.out.print("First user create: " + userSaved.getName());
         User sam= new User(3L, "Sam", "dean.winchester@gmail.com", "oklahoma 742" );
         assertThrows(EmailAlreadyRegisteredException.class,
-                () -> createUserService.createUser(sam));
+                () -> userService.createUser(sam));
     }
-    */
 
 }

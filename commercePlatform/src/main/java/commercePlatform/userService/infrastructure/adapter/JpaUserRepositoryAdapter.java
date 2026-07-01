@@ -8,6 +8,7 @@ import commercePlatform.userService.infrastructure.repository.JpaUserRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class JpaUserRepositoryAdapter implements UserGateway {
@@ -32,5 +33,15 @@ public class JpaUserRepositoryAdapter implements UserGateway {
         return repository.findAll().stream()
                 .map(mapper::toDomain)
                 .toList();
+    }
+
+    @Override
+    public Optional<User> getUserById(Long id) {
+        return repository.findById(id).map(mapper::toDomain);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        repository.deleteById(id);
     }
 }

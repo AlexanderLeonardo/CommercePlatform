@@ -30,7 +30,7 @@ public class ProductService {
         return productGateway.getAllProducts();
     }
 
-    public Product getProductById(Long idProduct) throws NoSuchElementException {
+    public Product getProductById(Long idProduct) {
 
         return productGateway.findById(idProduct).orElseThrow(() -> new ProductNotFoundException(idProduct));
     }

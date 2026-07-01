@@ -5,6 +5,7 @@ import commercePlatform.userService.api.dto.response.UserResponse;
 import commercePlatform.userService.api.mapper.UserMapper;
 import commercePlatform.userService.domain.model.User;
 import commercePlatform.userService.domain.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,5 +32,25 @@ public class UserController {
     @GetMapping
     public List<User> getAllUsers(){
         return service.getAllUsers();
+    }
+
+    @GetMapping("/{id}")
+    public UserResponse getUser(@PathVariable Long id){
+        User userFindById = service.getUserById(id);
+        return mapper.toResponse(userFindById);
+    }
+
+    @PutMapping("/{id}")
+    public UserResponse updateUser(@PathVariable Long id, @RequestBody UserRequest userRequest){
+        User user = mapper.toDomain(userRequest);
+        User updated = service.updateUser(id, user);
+        return mapper.toResponse(updated);
+    }
+
+    @SuppressWarnings("NullableProblems")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id){
+        service.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }
