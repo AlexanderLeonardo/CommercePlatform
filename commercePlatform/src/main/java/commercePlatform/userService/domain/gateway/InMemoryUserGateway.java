@@ -1,6 +1,7 @@
 package commercePlatform.userService.domain.gateway;
 
 import commercePlatform.userService.domain.model.User;
+import commercePlatform.userService.exception.UserNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +15,6 @@ public class InMemoryUserGateway implements UserGateway {
     public User saveUser(User user) {
         users.add(user);
         return user;
-    }
-
-    public boolean existByEmail(String mail) {
-        return users.stream().anyMatch(usr -> usr.getEmail().equals(mail));
     }
 
     @Override
@@ -36,7 +33,8 @@ public class InMemoryUserGateway implements UserGateway {
 
     @Override
     public void deleteUser(Long id) {
-
+        User user = getUserById(id).orElseThrow(() -> new UserNotFoundException(id));
+        users.remove(user);
     }
 
 }
