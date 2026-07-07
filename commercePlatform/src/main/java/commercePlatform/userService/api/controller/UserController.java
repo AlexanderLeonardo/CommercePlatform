@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -34,17 +35,27 @@ public class UserController {
         return service.getAllUsers();
     }
 
+    @SuppressWarnings("NullableProblems")
     @GetMapping("/{id}")
-    public UserResponse getUser(@PathVariable Long id){
-        User userFindById = service.getUserById(id);
-        return mapper.toResponse(userFindById);
+    public ResponseEntity<UserResponse> getUser(@PathVariable Long id){
+        Optional<User> userFindByID = service.getUserById(id);
+        return userFindByID.map(user ->
+             ResponseEntity.ok(mapper.toResponse(user)))
+                           .orElseGet(() -> ResponseEntity.notFound().build());
+        //User userFindById = service.getUserById(id);
+        //return mapper.toResponse(userFindById);
     }
 
+    @SuppressWarnings("NullableProblems")
     @PutMapping("/{id}")
-    public UserResponse updateUser(@PathVariable Long id, @RequestBody UserRequest userRequest){
-        User user = mapper.toDomain(userRequest);
-        User updated = service.updateUser(id, user);
-        return mapper.toResponse(updated);
+    public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @RequestBody UserRequest userRequest){
+        Optional<User> userFindByID = service.getUserById(id);
+        return userFindByID.map(oldUser ->
+             ResponseEntity.ok(mapper.toResponse(service.updateUser(oldUser, userRequest))))
+                           .orElseGet(() -> ResponseEntity.notFound().build());
+        //User user = mapper.toDomain(userRequest);
+        //User updated = service.updateUser(id, user);
+        //return mapper.toResponse(updated);
     }
 
     @SuppressWarnings("NullableProblems")

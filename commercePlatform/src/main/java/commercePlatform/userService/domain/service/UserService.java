@@ -1,12 +1,13 @@
 package commercePlatform.userService.domain.service;
 
+import commercePlatform.userService.api.dto.request.UserRequest;
 import commercePlatform.userService.exception.EmailAlreadyRegisteredException;
 import commercePlatform.userService.domain.gateway.UserGateway;
 import commercePlatform.userService.domain.model.User;
-import commercePlatform.userService.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -54,21 +55,20 @@ public class UserService {
         return userGateway.getAllUsers();
     }
 
-    public User getUserById(Long idUser){
-        return userGateway.getUserById(idUser).orElseThrow(() -> new UserNotFoundException(idUser));
+    public Optional<User> getUserById(Long idUser){
+        return userGateway.getUserById(idUser);
     }
 
-    public User updateUser(Long idUser, User updatedUser){
-        User saveUpdateUser = getUserById(idUser);
-        verifyEmailAlreadyRegisteredForUpdate(idUser, updatedUser.getEmail());
-        saveUpdateUser.setName(updatedUser.getName());
-        saveUpdateUser.setEmail(updatedUser.getEmail());
-        saveUpdateUser.setAddress(updatedUser.getAddress());
-        return userGateway.saveUser(saveUpdateUser);
+    public User updateUser(User oldUser, UserRequest newUser){
+        //User saveUpdateUser = getUserById(idUser);
+        verifyEmailAlreadyRegisteredForUpdate(oldUser.getId(), newUser.getEmail());
+        oldUser.setName(newUser.getName());
+        oldUser.setEmail(newUser.getEmail());
+        oldUser.setAddress(newUser.getAddress());
+        return userGateway.saveUser(oldUser);
     }
 
     public void deleteUser(Long idUser){
-        getUserById(idUser);
         userGateway.deleteUser(idUser);
     }
 }

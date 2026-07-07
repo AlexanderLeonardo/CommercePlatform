@@ -1,9 +1,12 @@
 package commercePlatform.productService.api.dto.request;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.math.BigDecimal;
 
 public class ProductRequest {
 
+    @Schema(description = "Nombre del producto", example = "Notebook Lenovo ThinkPad")
     private String name;
     private String description;
     private BigDecimal price;
