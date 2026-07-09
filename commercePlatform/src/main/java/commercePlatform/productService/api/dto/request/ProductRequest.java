@@ -8,9 +8,13 @@ public class ProductRequest {
 
     @Schema(description = "Nombre del producto", example = "Notebook Lenovo ThinkPad")
     private String name;
+    @Schema(description = "Descripción del producto")
     private String description;
+    @Schema(description = "Precio del producto")
     private BigDecimal price;
+    @Schema(description = "Stock disponible del producto")
     private int stock;
+    @Schema(description = "Flag que determina si un producto está disponible o no")
     private boolean active;
 
     public ProductRequest(String name, String description, BigDecimal price, int stock, boolean active) {

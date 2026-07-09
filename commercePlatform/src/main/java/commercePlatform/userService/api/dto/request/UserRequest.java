@@ -1,9 +1,14 @@
 package commercePlatform.userService.api.dto.request;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public class UserRequest {
 
+    @Schema(description = "Nombre del usuario", example = "Juan Perez")
     private String name;
+    @Schema(description = "Email del usuario", example = "juan.perez@gmail.com")
     private String email;
+    @Schema(description = "Dirección de residencia del usuario", example = "Avenida Siempre Viva 742")
     private String address;
 
     public UserRequest(String name, String email, String address) {

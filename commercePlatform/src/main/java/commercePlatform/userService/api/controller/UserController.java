@@ -5,6 +5,9 @@ import commercePlatform.userService.api.dto.response.UserResponse;
 import commercePlatform.userService.api.mapper.UserMapper;
 import commercePlatform.userService.domain.model.User;
 import commercePlatform.userService.domain.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +26,8 @@ public class UserController {
         this.mapper = mapper;
     }
 
+    @Operation(summary = "Crea un usuario nuevo")
+    @ApiResponse(responseCode = "200", description = "Usuario creado")
     @PostMapping
     public UserResponse createUser(@RequestBody UserRequest userRequest){
         User user = mapper.toDomain(userRequest);
@@ -30,11 +35,21 @@ public class UserController {
         return mapper.toResponse(saved);
     }
 
+    @Operation(summary = "Obtiene todos los usuarios del sistema")
+    @ApiResponse(responseCode = "200", description = "Usuarios del sistema")
     @GetMapping
     public List<User> getAllUsers(){
         return service.getAllUsers();
     }
 
+    @Operation(
+            summary = "Obtiene un usuario por ID",
+            description = "Devuelve la información completa de un usuario existente"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Usuario encontrado"),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
+    })
     @SuppressWarnings("NullableProblems")
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUser(@PathVariable Long id){
@@ -42,10 +57,16 @@ public class UserController {
         return userFindByID.map(user ->
              ResponseEntity.ok(mapper.toResponse(user)))
                            .orElseGet(() -> ResponseEntity.notFound().build());
-        //User userFindById = service.getUserById(id);
-        //return mapper.toResponse(userFindById);
     }
 
+    @Operation(
+            summary = "Actualiza los datos de un usuario por ID",
+            description = "Devuelve la información actualizada de un usuario existente"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Usuario encontrado y actualizado"),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
+    })
     @SuppressWarnings("NullableProblems")
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @RequestBody UserRequest userRequest){
@@ -53,11 +74,13 @@ public class UserController {
         return userFindByID.map(oldUser ->
              ResponseEntity.ok(mapper.toResponse(service.updateUser(oldUser, userRequest))))
                            .orElseGet(() -> ResponseEntity.notFound().build());
-        //User user = mapper.toDomain(userRequest);
-        //User updated = service.updateUser(id, user);
-        //return mapper.toResponse(updated);
     }
 
+    @Operation(summary = "Elimina un usuario existente")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Usuario encontrado y eliminado"),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
+    })
     @SuppressWarnings("NullableProblems")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
