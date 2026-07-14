@@ -32,7 +32,7 @@ public class CreateOrderTest {
     void updateOrderTotal(){
         orderDean.addOrderItem(orderItemTablet);
         orderDean.addOrderItem(orderItemMonitor);
-        assertEquals(BigDecimal.valueOf(550), orderDean.getTotal());
+        assertEquals(BigDecimal.valueOf(550), orderDean.calculateTotal());
     }
 
     @Test

@@ -133,6 +133,9 @@ public class Order {
         // del tipo "EmptyOrderException"
         verifyOrderNotEmpty();
         String updateTotal = paymentMethod.applyDiscount(total).stripTrailingZeros().toPlainString();
+        /*
+        * REFACTORIZAR LA LÓGICA DEL DESCUENTO EN OTRO MÉTODO, SE REPITE VARIAS VECES EL CÓDIGO
+        * */
         this.total = new BigDecimal(updateTotal);
         // Posteriormente, cambiar el estado del pedido a "CONFIRMED"
         status = OrderStatus.CONFIRMED;
@@ -168,7 +171,7 @@ public class Order {
         updateOrderItem.setQuantity(newQuantity);
     }
 
-    private BigDecimal calculateTotal() {
+    public BigDecimal calculateTotal() {
         return items.stream()
                 .map(OrderItem::calculateSubtotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
