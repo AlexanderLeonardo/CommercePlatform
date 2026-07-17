@@ -1,18 +1,9 @@
 package commercePlatform.orderService.domain.PaymentStrategy;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-
 import java.math.BigDecimal;
 
-@Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class Payment {
+public interface Payment {
 
-    @Id
-    private Long id;
-
-    public abstract BigDecimal applyDiscount(BigDecimal total);
+    /* ENUM para cuando se reciba la forma de pago desde el cliente Postman */
+    public BigDecimal payWithADiscountApplied(BigDecimal total);
 }

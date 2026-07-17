@@ -1,6 +1,8 @@
 package commercePlatform.testModel.Order;
 
 import commercePlatform.orderService.domain.OrderItem;
+import commercePlatform.orderService.domain.PaymentStrategy.CashPayment;
+import commercePlatform.orderService.domain.PaymentStrategy.CreditCardPayment;
 import commercePlatform.orderService.domain.PaymentStrategy.MercadoPagoPayment;
 import commercePlatform.orderService.domain.Order;
 import commercePlatform.orderService.domain.OrderStatus;
@@ -33,6 +35,18 @@ public class CreateOrderTest {
         orderDean.addOrderItem(orderItemTablet);
         orderDean.addOrderItem(orderItemMonitor);
         assertEquals(BigDecimal.valueOf(550), orderDean.calculateTotal());
+        assertEquals(BigDecimal.valueOf(550), orderDean.getTotal());
+    }
+
+    @Test
+    void shouldCalculateOrderTotalWithoutZerosInDecimals(){
+        Order orderSam = new Order(2L, 2L, "Sam", "Sam.winchester@gmail.com", new BigDecimal(0), new CashPayment());
+        OrderItem orderItemNotebook = new OrderItem(3L, 3L, "Notebook", BigDecimal.valueOf(560.40) , 1);
+        OrderItem orderItemMouse = new OrderItem(4L, 4L, "Mouse", BigDecimal.valueOf(80.60), 1);
+        orderSam.addOrderItem(orderItemNotebook);
+        orderSam.addOrderItem(orderItemMouse);
+        assertEquals(BigDecimal.valueOf(641), orderSam.getTotal());
+        assertEquals(BigDecimal.valueOf(641), orderSam.calculateTotal());
     }
 
     @Test
@@ -49,6 +63,7 @@ public class CreateOrderTest {
         orderDean.addOrderItem(orderItemMonitor);
         orderDean.modifyOrderItemWithId(2L, 6);
         assertEquals(BigDecimal.valueOf(1150), orderDean.getTotal());
+        assertEquals(BigDecimal.valueOf(1150), orderDean.calculateTotal());
     }
 }
 

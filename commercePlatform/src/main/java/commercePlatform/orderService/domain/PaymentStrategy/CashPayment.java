@@ -1,14 +1,15 @@
 package commercePlatform.orderService.domain.PaymentStrategy;
 
-import jakarta.persistence.Entity;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
-@Entity
-public class CashPayment extends Payment {
+@Component
+public class CashPayment implements Payment {
 
     @Override
-    public BigDecimal applyDiscount(BigDecimal total) {
+    public BigDecimal payWithADiscountApplied(BigDecimal total) {
+        System.out.print("The Payment was made in CASH \n");
         return total.multiply(BigDecimal.valueOf(0.85)); // 15% de descuento pagando en efectivo
     }
 }

@@ -37,7 +37,7 @@ public class ConfirmedOrderTest {
 
     @Test
     void shouldNotModifyOrderInConfirmedState(){
-        Order orderCrowley = new Order(3L, 3L, "Crowlie","crowlie.kingofhell@gmail.com", BigDecimal.ZERO, new CashPayment());
+        Order orderCrowley = new Order(3L, 3L, "Crowley","crowlie.kingofhell@gmail.com", BigDecimal.ZERO, new CashPayment());
         OrderItem orderItemSmartTv = new OrderItem(3L, 3L, "SmartTv",BigDecimal.valueOf(430), 1);
         orderCrowley.addOrderItem(orderItemSmartTv);
         orderCrowley.confirmedOrder();
@@ -58,9 +58,9 @@ public class ConfirmedOrderTest {
     @Test
     void shouldApplyDiscountForPaymentStrategy(){
         Order orderKevin = new Order(5L, 4L, "Kevin", "kevin.profeta@gmail.com", BigDecimal.ZERO, new CashPayment());
-        OrderItem orderItemMouse = new OrderItem(5L, 5L, "Mouse", BigDecimal.valueOf(25), 3);
+        OrderItem orderItemMouse = new OrderItem(5L, 5L, "Mouse", BigDecimal.valueOf(120), 3);
         orderKevin.addOrderItem(orderItemMouse);
         orderKevin.confirmedOrder();
-        assertEquals(BigDecimal.valueOf(63.75), orderKevin.getTotal());
+        assertEquals(BigDecimal.valueOf(306), orderKevin.getTotal());
     }
 }

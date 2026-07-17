@@ -25,7 +25,6 @@ public class Order {
     @OneToMany
     @JoinColumn(name="order_id")
     private List<OrderItem> items;  // representa los productos que tiene el pedido
-    @OneToOne
     private Payment paymentMethod;
 
     public Order(Long id, Long userId, String userName, String userEmail, BigDecimal total, Payment paymentMethod) {
@@ -120,8 +119,7 @@ public class Order {
     }
 
     public void updateOrderTotal(BigDecimal subtotalOrderItem){
-        String updateTotal = this.total.add(subtotalOrderItem).stripTrailingZeros().toPlainString();
-        this.total = new BigDecimal(updateTotal);
+        updateOrderTotalWithoutZerosFromDecimals(total.add(subtotalOrderItem));
     }
 
     public int quantityOfProducts(){
@@ -132,12 +130,7 @@ public class Order {
         // Primero verificar que el pedido no esté vacío. Si está vacío, arrojar una excepción
         // del tipo "EmptyOrderException"
         verifyOrderNotEmpty();
-        String updateTotal = paymentMethod.applyDiscount(total).stripTrailingZeros().toPlainString();
-        /*
-        * REFACTORIZAR LA LÓGICA DEL DESCUENTO EN OTRO MÉTODO, SE REPITE VARIAS VECES EL CÓDIGO
-        * */
-        this.total = new BigDecimal(updateTotal);
-        // Posteriormente, cambiar el estado del pedido a "CONFIRMED"
+        updateOrderTotalWithoutZerosFromDecimals(paymentMethod.payWithADiscountApplied(total));
         status = OrderStatus.CONFIRMED;
     }
 
@@ -162,9 +155,12 @@ public class Order {
         if(findOrderItemById(idOrderItem).isPresent()){
             OrderItem updateOrderItem = findOrderItemById(idOrderItem).get();
             updateQuantityOrderItem(updateOrderItem, newQuantity);
-            String updateTotal = calculateTotal().stripTrailingZeros().toPlainString();
-            this.total = new BigDecimal(updateTotal);
+            this.total = calculateTotal();
         }
+    }
+
+    private void updateOrderTotalWithoutZerosFromDecimals(BigDecimal updateTotal){
+        this.total = new BigDecimal(updateTotal.stripTrailingZeros().toPlainString());
     }
 
     private void updateQuantityOrderItem(OrderItem updateOrderItem, Integer newQuantity) {
@@ -172,9 +168,10 @@ public class Order {
     }
 
     public BigDecimal calculateTotal() {
-        return items.stream()
-                .map(OrderItem::calculateSubtotal)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal total = items.stream()
+                            .map(OrderItem::calculateSubtotal)
+                            .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return new BigDecimal(total.stripTrailingZeros().toPlainString());
     }
 
     private void verifyOrderStateForModify(){

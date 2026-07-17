@@ -1,14 +1,15 @@
 package commercePlatform.orderService.domain.PaymentStrategy;
 
-import jakarta.persistence.Entity;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
-@Entity
-public class MercadoPagoPayment extends Payment {
+@Component
+public class MercadoPagoPayment implements Payment {
 
     @Override
-    public BigDecimal applyDiscount(BigDecimal total) {
-        return total.multiply(BigDecimal.valueOf(0.95)); // 5% de descuento pagando con Mercado Pago
+    public BigDecimal payWithADiscountApplied(BigDecimal total) {
+        System.out.print("The Payment was made with MERCADO PAGO \n");
+        return total.multiply(BigDecimal.valueOf(0.95));  // 5% de descuento pagando con Mercado Pago
     }
 }
