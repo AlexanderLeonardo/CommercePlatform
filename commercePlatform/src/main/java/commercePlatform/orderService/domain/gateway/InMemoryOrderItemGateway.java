@@ -1,6 +1,6 @@
-package commercePlatform.orderService.gateway;
+package commercePlatform.orderService.domain.gateway;
 
-import commercePlatform.orderService.domain.OrderItem;
+import commercePlatform.orderService.domain.model.OrderItem;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

@@ -4,6 +4,7 @@ import commercePlatform.userService.api.dto.request.UserRequest;
 import commercePlatform.userService.exception.EmailAlreadyRegisteredException;
 import commercePlatform.userService.domain.gateway.UserGateway;
 import commercePlatform.userService.domain.model.User;
+import commercePlatform.userService.validator.UserValidator;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,40 +15,19 @@ public class UserService {
 /* Lógica que usa la abstracción */
 
     private final UserGateway userGateway;
+    private final UserValidator userValidator;
 
-    public UserService(UserGateway userGateway) {
+    public UserService(UserGateway userGateway, UserValidator userValidator) {
         this.userGateway = userGateway;
+        this.userValidator = userValidator;
     }
-
 
     public boolean existByEmail(String mail){
         return getAllUsers().stream().anyMatch( usr -> usr.getEmail().equals(mail));
     }
 
-    public boolean existByEmailForUpdate(Long idUserUpdate, String email){
-        boolean existByEmailInOtherUsers = false;
-        for(User usr: getAllUsers()){
-            if(!usr.getId().equals(idUserUpdate)){
-                existByEmailInOtherUsers = existByEmailInOtherUsers || usr.getEmail().equals(email);
-            }
-        }
-        return existByEmailInOtherUsers;
-    }
-
-    public void verifyEmailAlreadyRegistered(String email){
-        if(existByEmail(email)){
-            throw new EmailAlreadyRegisteredException(email);
-        }
-    }
-
-    public void verifyEmailAlreadyRegisteredForUpdate(Long idUserUpdate, String email){
-        if(existByEmailForUpdate(idUserUpdate, email)){
-            throw new EmailAlreadyRegisteredException(email);
-        }
-    }
-
     public User createUser(User user) {
-        verifyEmailAlreadyRegistered(user.getEmail());
+        userValidator.validateNewUser(user);
         return userGateway.saveUser(user);
     }
 
@@ -60,9 +40,8 @@ public class UserService {
     }
 
     public User updateUser(User oldUser, UserRequest newUser){
-        //User saveUpdateUser = getUserById(idUser);
-        verifyEmailAlreadyRegisteredForUpdate(oldUser.getId(), newUser.getEmail());
         oldUser.setName(newUser.getName());
+        /* La cuenta de email NO cambia, debe ser la misma con la que se registró el usuario */
         oldUser.setEmail(newUser.getEmail());
         oldUser.setAddress(newUser.getAddress());
         return userGateway.saveUser(oldUser);

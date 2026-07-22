@@ -37,4 +37,9 @@ public class InMemoryUserGateway implements UserGateway {
         users.remove(user);
     }
 
+    @Override
+    public boolean existsByEmail(String mail) {
+        return getAllUsers().stream().anyMatch(usr -> usr.getEmail().equals(mail));
+    }
+
 }

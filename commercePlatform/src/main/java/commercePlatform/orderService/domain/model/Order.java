@@ -1,7 +1,8 @@
-package commercePlatform.orderService.domain;
+package commercePlatform.orderService.domain.model;
 
+import commercePlatform.orderService.domain.OrderStatus;
 import commercePlatform.orderService.exception.*;
-import commercePlatform.orderService.domain.PaymentStrategy.Payment;
+import commercePlatform.orderService.domain.model.PaymentStrategy.Payment;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -9,25 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Entity
-@Table(name = "ORDERS")
 public class Order {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long userId;
     private String userName;
     private String userEmail;
-    @Enumerated(EnumType.STRING)
     private OrderStatus status;
     private BigDecimal total;
-    @OneToMany
-    @JoinColumn(name="order_id")
     private List<OrderItem> items;  // representa los productos que tiene el pedido
-    private Payment paymentMethod;
+    //private Payment paymentMethod;
 
-    public Order(Long id, Long userId, String userName, String userEmail, BigDecimal total, Payment paymentMethod) {
+    public Order(Long id, Long userId, String userName, String userEmail, BigDecimal total) {
         this.id = id;
         this.userId = userId;
         this.userName = userName;
@@ -35,7 +29,7 @@ public class Order {
         this.status = OrderStatus.CREATED;
         this.total = total;
         this.items = new ArrayList<OrderItem>();
-        this.paymentMethod = paymentMethod;
+        //this.paymentMethod = paymentMethod;
     }
 
     private Order(){
@@ -97,13 +91,13 @@ public class Order {
         this.items = items;
     }
 
-    public Payment getPaymentMethod() {
-        return paymentMethod;
-    }
+    //public Payment getPaymentMethod() {
+    //    return paymentMethod;
+    //}
 
-    public void setPaymentMethod(Payment paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
+    //public void setPaymentMethod(Payment paymentMethod) {
+    //    this.paymentMethod = paymentMethod;
+    //}
 
     public void addOrderItem(OrderItem orderItem){
         // Primero verificar que el estado de la orden sea "CREATED" para agregar un nuevo producto al pedido
@@ -130,7 +124,7 @@ public class Order {
         // Primero verificar que el pedido no esté vacío. Si está vacío, arrojar una excepción
         // del tipo "EmptyOrderException"
         verifyOrderNotEmpty();
-        updateOrderTotalWithoutZerosFromDecimals(paymentMethod.payWithADiscountApplied(total));
+        //updateOrderTotalWithoutZerosFromDecimals(paymentMethod.payWithADiscountApplied(total));
         status = OrderStatus.CONFIRMED;
     }
 
@@ -159,7 +153,7 @@ public class Order {
         }
     }
 
-    private void updateOrderTotalWithoutZerosFromDecimals(BigDecimal updateTotal){
+    public void updateOrderTotalWithoutZerosFromDecimals(BigDecimal updateTotal){
         this.total = new BigDecimal(updateTotal.stripTrailingZeros().toPlainString());
     }
 

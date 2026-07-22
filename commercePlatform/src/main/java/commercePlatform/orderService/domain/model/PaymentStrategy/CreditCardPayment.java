@@ -1,4 +1,4 @@
-package commercePlatform.orderService.domain.PaymentStrategy;
+package commercePlatform.orderService.domain.model.PaymentStrategy;
 
 import org.springframework.stereotype.Component;
 

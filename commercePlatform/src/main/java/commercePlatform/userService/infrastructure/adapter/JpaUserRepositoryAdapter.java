@@ -44,4 +44,9 @@ public class JpaUserRepositoryAdapter implements UserGateway {
     public void deleteUser(Long id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public boolean existsByEmail(String mail) {
+        return getAllUsers().stream().anyMatch(usr -> usr.getEmail().equals(mail));
+    }
 }

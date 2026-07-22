@@ -1,10 +1,9 @@
 package commercePlatform.testModel.Order;
 
-import commercePlatform.orderService.domain.OrderItem;
-import commercePlatform.orderService.domain.PaymentStrategy.CashPayment;
-import commercePlatform.orderService.domain.PaymentStrategy.CreditCardPayment;
-import commercePlatform.orderService.domain.PaymentStrategy.MercadoPagoPayment;
-import commercePlatform.orderService.domain.Order;
+import commercePlatform.orderService.domain.model.OrderItem;
+import commercePlatform.orderService.domain.model.PaymentStrategy.CashPayment;
+import commercePlatform.orderService.domain.model.PaymentStrategy.MercadoPagoPayment;
+import commercePlatform.orderService.domain.model.Order;
 import commercePlatform.orderService.domain.OrderStatus;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CreateOrderTest {
 
-    Order orderDean = new Order(1L, 1L, "Dean", "dean.winchester@gmail.com", new BigDecimal(0), new MercadoPagoPayment());
+    Order orderDean = new Order(1L, 1L, "Dean", "dean.winchester@gmail.com", new BigDecimal(0));
     OrderItem orderItemTablet = new OrderItem(1L, 1L, "Tablet", BigDecimal.valueOf(250) , 1);
     OrderItem orderItemMonitor = new OrderItem(2L, 2L, "Monitor", BigDecimal.valueOf(150), 2);
 
@@ -40,7 +39,7 @@ public class CreateOrderTest {
 
     @Test
     void shouldCalculateOrderTotalWithoutZerosInDecimals(){
-        Order orderSam = new Order(2L, 2L, "Sam", "Sam.winchester@gmail.com", new BigDecimal(0), new CashPayment());
+        Order orderSam = new Order(2L, 2L, "Sam", "Sam.winchester@gmail.com", new BigDecimal(0));
         OrderItem orderItemNotebook = new OrderItem(3L, 3L, "Notebook", BigDecimal.valueOf(560.40) , 1);
         OrderItem orderItemMouse = new OrderItem(4L, 4L, "Mouse", BigDecimal.valueOf(80.60), 1);
         orderSam.addOrderItem(orderItemNotebook);

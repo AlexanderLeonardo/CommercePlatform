@@ -1,7 +1,7 @@
 package commercePlatform.orderService.service;
 
-import commercePlatform.orderService.domain.Order;
-import commercePlatform.orderService.gateway.OrderGateway;
+import commercePlatform.orderService.domain.model.Order;
+import commercePlatform.orderService.domain.gateway.OrderGateway;
 
 public class ConfirmedOrderService {
 

@@ -5,6 +5,7 @@ import commercePlatform.userService.domain.gateway.InMemoryUserGateway;
 import commercePlatform.userService.domain.gateway.UserGateway;
 import commercePlatform.userService.domain.model.User;
 import commercePlatform.userService.domain.service.UserService;
+import commercePlatform.userService.validator.UserValidator;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -12,14 +13,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class UserTest {
 
     UserGateway userGateway = new InMemoryUserGateway();
-    UserService userService = new UserService(userGateway);
+    UserValidator userValidator = new UserValidator(userGateway);
+    UserService userService = new UserService(userGateway, userValidator);
 
     @Test
     void shouldCreateUserSuccessfully() {
         User alex = new User(1L, "Alexander", "alex.quinhonez@gmail.com", "siempre viva 123");
         assertEquals("Alexander", alex.getName());
     }
-
 
     @Test
     void shouldNotCreateUserWithEmailAlreadyExist(){

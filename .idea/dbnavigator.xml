@@ -25,12 +25,12 @@
   <component name="DBNavigator.Project.DatabaseBrowserManager">
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
-    <show-object-properties value="true" />
+    <show-object-properties value="false" />
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="5bf084ba-915a-4c91-9120-3d7c88f3f63a">
-      <console name="CommercePlatformDB" type="STANDARD" schema="commerceplatform" session="Main"><![CDATA[DROP TABLE USER;]]></console>
+      <console name="CommercePlatformDB" type="STANDARD" schema="commerceplatform" session="Main"><![CDATA[select * from product]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -44,6 +44,10 @@
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="5bf084ba-915a-4c91-9120-3d7c88f3f63a" />
+  </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="5bf084ba-915a-4c91-9120-3d7c88f3f63a" dataset="commerceplatform.product" active-filter-id="" />
+    <filter-actions connection-id="5bf084ba-915a-4c91-9120-3d7c88f3f63a" dataset="commerceplatform.orders" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />

@@ -50,7 +50,8 @@ public class Product {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void changePrice(BigDecimal price) {
+        validationPrice(price);
         this.price = price;
     }
 
@@ -66,7 +67,8 @@ public class Product {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void changeStock(int stock) {
+        validationStock(stock);
         this.stock = stock;
     }
 

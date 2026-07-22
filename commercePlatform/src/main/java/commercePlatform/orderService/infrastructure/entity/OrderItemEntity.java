@@ -1,4 +1,4 @@
-package commercePlatform.orderService.domain;
+package commercePlatform.orderService.infrastructure.entity;
 
 import jakarta.persistence.*;
 
@@ -6,26 +6,22 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "ORDER_ITEM")
-public class OrderItem {
+public class OrderItemEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long productId;
     private String productName;
     private BigDecimal productPrice;
     private Integer quantity;
 
-    public OrderItem(Long id, Long productId, String productName, BigDecimal productPrice, Integer quantity) {
+    public OrderItemEntity(Long id, Long productId, String productName, BigDecimal productPrice, Integer quantity) {
         this.id = id;
         this.productId = productId;
         this.productName = productName;
         this.productPrice = productPrice;
         this.quantity = quantity;
-    }
-
-    private OrderItem(){
-
     }
 
     public Long getId() {

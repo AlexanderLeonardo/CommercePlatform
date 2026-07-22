@@ -2,7 +2,6 @@ package commercePlatform.productService.domain.service;
 
 import commercePlatform.productService.api.dto.request.PatchProductRequest;
 import commercePlatform.productService.api.dto.request.ProductRequest;
-import commercePlatform.productService.api.validator.ProductValidator;
 import commercePlatform.productService.domain.gateway.ProductGateway;
 import commercePlatform.productService.domain.model.Product;
 import org.springframework.stereotype.Service;
@@ -14,15 +13,13 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductGateway productGateway;
-    private final ProductValidator productValidator;
+    //private final ProductValidator productValidator;
 
-    public ProductService(ProductGateway productGateway, ProductValidator productValidator) {
+    public ProductService(ProductGateway productGateway) {
         this.productGateway = productGateway;
-        this.productValidator = productValidator;
     }
 
     public Product createProduct(Product product) {
-        productValidator.validate(product);
         return productGateway.saveProduct(product);
     }
 
@@ -37,10 +34,9 @@ public class ProductService {
     public Product updateProduct(Product oldProduct, ProductRequest newProduct) {
         oldProduct.setName(newProduct.getName());
         oldProduct.setDescription(newProduct.getDescription());
-        oldProduct.setPrice(newProduct.getPrice());
-        oldProduct.setStock(newProduct.getStock());
+        oldProduct.changePrice(newProduct.getPrice());
+        oldProduct.changeStock(newProduct.getStock());
         oldProduct.setActive(newProduct.isActive());
-        productValidator.validate(oldProduct);
         return productGateway.saveProduct(oldProduct);
     }
 
@@ -52,27 +48,24 @@ public class ProductService {
             oldProduct.setDescription(newProduct.getDescription());
         }
         if (newProduct.getPrice() != null) {
-            oldProduct.setPrice(newProduct.getPrice());
+            oldProduct.changePrice(newProduct.getPrice());
         }
         if(newProduct.getStock() != null){
-            oldProduct.setStock(newProduct.getStock());
+            oldProduct.changeStock(newProduct.getStock());
         }
         if(newProduct.getActive() != null){
             oldProduct.setActive(newProduct.getActive());
         }
-        productValidator.validate(oldProduct);
         return productGateway.saveProduct(oldProduct);
     }
 
     public Product modifyStock(Product oldProduct, int newStock) {
-        oldProduct.setStock(newStock);
-        productValidator.validate(oldProduct);
+        oldProduct.changeStock(newStock);
         return productGateway.saveProduct(oldProduct);
     }
 
     public Product decreaseStock(Product oldProduct, int quantity) {
         oldProduct.decreaseStock(quantity);
-        productValidator.validate(oldProduct);
         return productGateway.saveProduct(oldProduct);
     }
 
