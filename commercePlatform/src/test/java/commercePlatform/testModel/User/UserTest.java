@@ -19,7 +19,8 @@ public class UserTest {
     @Test
     void shouldCreateUserSuccessfully() {
         User alex = new User(1L, "Alexander", "alex.quinhonez@gmail.com", "siempre viva 123");
-        assertEquals("Alexander", alex.getName());
+        User saved = userService.createUser(alex);
+        assertEquals("Alexander", saved.getName());
     }
 
     @Test
