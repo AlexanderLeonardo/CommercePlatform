@@ -24,6 +24,10 @@ public class OrderEntity {
     @JoinColumn(name = "order_id")
     private List<OrderItemEntity> items;
 
+    protected OrderEntity(){
+
+    }
+
     public OrderEntity(Long id, Long userId, String userName, String userEmail, OrderStatus status, BigDecimal total) {
         this.id = id;
         this.userId = userId;

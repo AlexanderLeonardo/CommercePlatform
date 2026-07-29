@@ -1,5 +1,6 @@
 package commercePlatform.testModel.Product;
 
+import commercePlatform.productService.exception.InsufficientStockException;
 import commercePlatform.productService.exception.InvalidPriceException;
 import commercePlatform.productService.exception.InvalidStockException;
 import commercePlatform.productService.domain.model.Product;
@@ -44,8 +45,15 @@ public class ProductTest {
     }
 
     @Test
+    void shouldThrowExceptionWhenStockIsInsufficient(){
+        Product smartTv = new Product(6L, "SmartTv", "Tv Smart 63p Ultra HD 4K", BigDecimal.valueOf(680), 7, true);
+        assertThrows(InsufficientStockException.class,
+                ()-> smartTv.decreaseStock(9));
+    }
+
+    @Test
     void shouldDeactivateProduct(){
-        Product headphones = new Product(6L, "Headphones", "Wireless headphones Phillips", BigDecimal.valueOf(170), 35, true);
+        Product headphones = new Product(7L, "Headphones", "Wireless headphones Phillips", BigDecimal.valueOf(170), 35, true);
         headphones.deactivate();
         assertFalse(headphones.isActive());
     }

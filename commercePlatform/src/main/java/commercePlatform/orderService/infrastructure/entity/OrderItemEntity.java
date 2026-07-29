@@ -16,6 +16,10 @@ public class OrderItemEntity {
     private BigDecimal productPrice;
     private Integer quantity;
 
+    protected OrderItemEntity(){
+
+    }
+
     public OrderItemEntity(Long id, Long productId, String productName, BigDecimal productPrice, Integer quantity) {
         this.id = id;
         this.productId = productId;
