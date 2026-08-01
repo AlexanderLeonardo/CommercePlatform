@@ -11,11 +11,11 @@ public class ProductMapper {
     public Product toDomain(ProductRequest request){
 
         Product product = new Product();
-        product.setName(request.getName());
-        product.setDescription(request.getDescription());
-        product.changePrice(request.getPrice());
-        product.changeStock(request.getStock());
-        product.setActive(request.isActive());
+        product.setName(request.name());
+        product.setDescription(request.description());
+        product.changePrice(request.price());
+        product.changeStock(request.stock());
+        product.setActive(request.active());
         return product;
     }
 

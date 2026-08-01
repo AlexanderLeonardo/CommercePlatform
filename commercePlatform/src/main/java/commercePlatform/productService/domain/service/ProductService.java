@@ -13,7 +13,6 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductGateway productGateway;
-    //private final ProductValidator productValidator;
 
     public ProductService(ProductGateway productGateway) {
         this.productGateway = productGateway;
@@ -32,29 +31,29 @@ public class ProductService {
     }
 
     public Product updateProduct(Product oldProduct, ProductRequest newProduct) {
-        oldProduct.setName(newProduct.getName());
-        oldProduct.setDescription(newProduct.getDescription());
-        oldProduct.changePrice(newProduct.getPrice());
-        oldProduct.changeStock(newProduct.getStock());
-        oldProduct.setActive(newProduct.isActive());
+        oldProduct.setName(newProduct.name());
+        oldProduct.setDescription(newProduct.description());
+        oldProduct.changePrice(newProduct.price());
+        oldProduct.changeStock(newProduct.stock());
+        oldProduct.setActive(newProduct.active());
         return productGateway.saveProduct(oldProduct);
     }
 
     public Product partialUpdateProduct(Product oldProduct, PatchProductRequest newProduct) {
-        if (newProduct.getName() != null) {
-            oldProduct.setName(newProduct.getName());
+        if (newProduct.name() != null) {
+            oldProduct.setName(newProduct.name());
         }
-        if (newProduct.getDescription() != null) {
-            oldProduct.setDescription(newProduct.getDescription());
+        if (newProduct.description() != null) {
+            oldProduct.setDescription(newProduct.description());
         }
-        if (newProduct.getPrice() != null) {
-            oldProduct.changePrice(newProduct.getPrice());
+        if (newProduct.price() != null) {
+            oldProduct.changePrice(newProduct.price());
         }
-        if(newProduct.getStock() != null){
-            oldProduct.changeStock(newProduct.getStock());
+        if(newProduct.stock() != null){
+            oldProduct.changeStock(newProduct.stock());
         }
-        if(newProduct.getActive() != null){
-            oldProduct.setActive(newProduct.getActive());
+        if(newProduct.active() != null){
+            oldProduct.setActive(newProduct.active());
         }
         return productGateway.saveProduct(oldProduct);
     }

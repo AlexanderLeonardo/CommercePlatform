@@ -20,7 +20,7 @@ public class OrderEntity {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
     private BigDecimal total;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     private List<OrderItemEntity> items;
 

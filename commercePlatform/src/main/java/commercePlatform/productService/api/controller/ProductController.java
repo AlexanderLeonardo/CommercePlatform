@@ -1,9 +1,7 @@
 package commercePlatform.productService.api.controller;
 
-import commercePlatform.productService.api.dto.request.DecreaseStockProductRequest;
 import commercePlatform.productService.api.dto.request.PatchProductRequest;
 import commercePlatform.productService.api.dto.request.ProductRequest;
-import commercePlatform.productService.api.dto.request.UpdateStockProductRequest;
 import commercePlatform.productService.api.dto.response.ProductResponse;
 import commercePlatform.productService.api.mapper.ProductMapper;
 import commercePlatform.productService.domain.model.Product;
@@ -104,10 +102,10 @@ public class ProductController {
     })
     @SuppressWarnings("NullableProblems")
     @PatchMapping("/{id}/stock/set")
-    public ResponseEntity<ProductResponse> modifyStock(@PathVariable Long id, @RequestBody UpdateStockProductRequest updateStockRequest){
+    public ResponseEntity<ProductResponse> modifyStock(@PathVariable Long id, @RequestBody Integer quantity){
         Optional<Product> productFindById = service.getProductById(id);
         return productFindById.map(oldProduct ->
-                ResponseEntity.ok(mapper.toResponse(service.modifyStock(oldProduct, updateStockRequest.getStock()))))
+                ResponseEntity.ok(mapper.toResponse(service.modifyStock(oldProduct, quantity))))
                               .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -120,10 +118,10 @@ public class ProductController {
     })
     @SuppressWarnings("NullableProblems")
     @PatchMapping("/{id}/stock/decrease")
-    public ResponseEntity<ProductResponse> decreaseStock(@PathVariable Long id, @RequestBody DecreaseStockProductRequest decreaseStockRequest){
+    public ResponseEntity<ProductResponse> decreaseStock(@PathVariable Long id, @RequestBody Integer quantity){
         Optional<Product> productFindById = service.getProductById(id);
         return productFindById.map(oldProduct ->
-                ResponseEntity.ok(mapper.toResponse(service.decreaseStock(oldProduct, decreaseStockRequest.getQuantity()))))
+                ResponseEntity.ok(mapper.toResponse(service.decreaseStock(oldProduct, quantity))))
                               .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
