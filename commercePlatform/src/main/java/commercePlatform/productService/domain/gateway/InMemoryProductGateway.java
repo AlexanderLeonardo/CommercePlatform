@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class InMemoryProductGateway implements ProductGateway {
+public class InMemoryProductGateway implements ProductGateway, InventoryGateway {
 
     private final List<Product> products = new ArrayList<>();
 
@@ -35,5 +35,11 @@ public class InMemoryProductGateway implements ProductGateway {
     public void deleteProduct(Long id) {
         Product product = findById(id).orElseThrow(() -> new ProductNotFoundException(id));
         products.remove(product);
+    }
+
+    @Override
+    public void reserveStock(Long id, int quantity) {
+        Product product = findById(id).orElseThrow(() -> new ProductNotFoundException(id));
+        product.decreaseStock(quantity);
     }
 }

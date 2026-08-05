@@ -1,8 +1,6 @@
 package commercePlatform.testModel.Order;
 
 import commercePlatform.orderService.domain.model.OrderItem;
-import commercePlatform.orderService.domain.model.PaymentStrategy.CashPayment;
-import commercePlatform.orderService.domain.model.PaymentStrategy.MercadoPagoPayment;
 import commercePlatform.orderService.domain.model.Order;
 import commercePlatform.orderService.domain.OrderStatus;
 import org.junit.jupiter.api.Test;
@@ -11,7 +9,7 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CreateOrderTest {
+public class CreateOrderUnitTest {
 
     Order orderDean = new Order(1L, 1L, "Dean", "dean.winchester@gmail.com", new BigDecimal(0));
     OrderItem orderItemTablet = new OrderItem(1L, 1L, "Tablet", BigDecimal.valueOf(250) , 1);

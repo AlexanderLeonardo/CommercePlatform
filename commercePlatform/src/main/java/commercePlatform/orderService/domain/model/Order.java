@@ -120,7 +120,7 @@ public class Order {
         return this.items.size();
     }
 
-    public void confirmedOrder(){
+    public void confirmOrder(){
         // Primero verificar que el pedido no esté vacío. Si está vacío, arrojar una excepción
         // del tipo "EmptyOrderException"
         verifyOrderNotEmpty();

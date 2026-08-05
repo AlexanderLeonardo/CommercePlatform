@@ -11,17 +11,6 @@ public interface OrderGateway {
 
     Order saveOrder(Order order);
 
-    void addOrderItem(Order order, OrderItem orderItem);
+    Optional<Order> findById(Long id);
 
-    int quantityOfProducts(Order order);
-
-    BigDecimal updatedOrderTotal(Order order);
-
-    void confirmedOrder(Order order);
-
-    Optional<OrderItem> findOrderItemById(Order order, Long idOrderItem);
-
-    void modifyOrderItemWithId(Order order, Long idOrderItem, Integer newQuantity);
-
-    void cancelOrder(Order order);
 }

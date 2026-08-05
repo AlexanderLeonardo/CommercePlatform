@@ -3,8 +3,6 @@ package commercePlatform.testModel.Order;
 import commercePlatform.orderService.domain.model.OrderItem;
 import commercePlatform.orderService.domain.model.Order;
 import commercePlatform.orderService.domain.OrderStatus;
-import commercePlatform.orderService.domain.model.PaymentStrategy.CreditCardPayment;
-import commercePlatform.orderService.domain.model.PaymentStrategy.MercadoPagoPayment;
 import commercePlatform.orderService.exception.CannotAddOrderItemException;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +11,7 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class CancelOrderTest {
+public class CancelOrderUnitTest {
 
     @Test
     void shouldCancelOrder(){

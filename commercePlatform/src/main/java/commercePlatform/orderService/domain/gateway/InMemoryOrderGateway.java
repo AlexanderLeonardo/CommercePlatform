@@ -19,37 +19,12 @@ public class InMemoryOrderGateway implements OrderGateway {
     }
 
     @Override
-    public void addOrderItem(Order order, OrderItem orderItem) {
-        order.addOrderItem(orderItem);
+    public Optional<Order> findById(Long id) {
+        Order order = orders.stream()
+                .filter(ord -> ord.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+        return Optional.ofNullable(order);
     }
 
-    @Override
-    public int quantityOfProducts(Order order) {
-        return order.quantityOfProducts();
-    }
-
-    @Override
-    public BigDecimal updatedOrderTotal(Order order) {
-        return order.getTotal();
-    }
-
-    @Override
-    public void confirmedOrder(Order order) {
-        order.confirmedOrder();
-    }
-
-    @Override
-    public Optional<OrderItem> findOrderItemById(Order order, Long id) {
-        return order.findOrderItemById(id);
-    }
-
-    @Override
-    public void modifyOrderItemWithId(Order order, Long idOrderItem, Integer newQuantity) {
-        order.modifyOrderItemWithId(idOrderItem, newQuantity);
-    }
-
-    @Override
-    public void cancelOrder(Order order) {
-        order.cancelOrder();
-    }
 }
