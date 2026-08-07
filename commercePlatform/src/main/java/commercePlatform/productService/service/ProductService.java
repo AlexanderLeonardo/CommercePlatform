@@ -1,4 +1,4 @@
-package commercePlatform.productService.domain.service;
+package commercePlatform.productService.service;
 
 import commercePlatform.productService.api.dto.request.PatchProductRequest;
 import commercePlatform.productService.api.dto.request.ProductRequest;

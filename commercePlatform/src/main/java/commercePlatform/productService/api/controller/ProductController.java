@@ -5,7 +5,7 @@ import commercePlatform.productService.api.dto.request.ProductRequest;
 import commercePlatform.productService.api.dto.response.ProductResponse;
 import commercePlatform.productService.api.mapper.ProductMapper;
 import commercePlatform.productService.domain.model.Product;
-import commercePlatform.productService.domain.service.ProductService;
+import commercePlatform.productService.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

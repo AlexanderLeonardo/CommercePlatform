@@ -1,6 +1,7 @@
 package commercePlatform.orderService.infrastructure.entity;
 
 import commercePlatform.orderService.domain.OrderStatus;
+import commercePlatform.orderService.domain.model.OrderItem;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -28,14 +29,14 @@ public class OrderEntity {
 
     }
 
-    public OrderEntity(Long id, Long userId, String userName, String userEmail, OrderStatus status, BigDecimal total) {
+    public OrderEntity(Long id, Long userId, String userName, String userEmail, OrderStatus status, BigDecimal total, List<OrderItemEntity> items) {
         this.id = id;
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
         this.status = status;
         this.total = total;
-        this.items = new ArrayList<OrderItemEntity>();
+        this.items = items;
     }
 
     public Long getId() {

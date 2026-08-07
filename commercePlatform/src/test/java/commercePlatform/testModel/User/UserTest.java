@@ -4,7 +4,7 @@ import commercePlatform.userService.exception.EmailAlreadyRegisteredException;
 import commercePlatform.userService.domain.gateway.InMemoryUserGateway;
 import commercePlatform.userService.domain.gateway.UserGateway;
 import commercePlatform.userService.domain.model.User;
-import commercePlatform.userService.domain.service.UserService;
+import commercePlatform.userService.service.UserService;
 import commercePlatform.userService.validator.UserValidator;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;

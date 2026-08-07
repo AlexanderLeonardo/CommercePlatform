@@ -4,7 +4,7 @@ import commercePlatform.userService.api.dto.request.UserRequest;
 import commercePlatform.userService.api.dto.response.UserResponse;
 import commercePlatform.userService.api.mapper.UserMapper;
 import commercePlatform.userService.domain.model.User;
-import commercePlatform.userService.domain.service.UserService;
+import commercePlatform.userService.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

@@ -7,6 +7,7 @@ import commercePlatform.orderService.exception.CannotAddOrderItemException;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -15,14 +16,14 @@ public class CancelOrderUnitTest {
 
     @Test
     void shouldCancelOrder(){
-        Order orderWalter = new Order(1L, 1L, "Walter", "Heisenberg.meta@gmail.com", BigDecimal.ZERO);
+        Order orderWalter = new Order(1L, 1L, "Walter", "Heisenberg.meta@gmail.com", OrderStatus.CREATED, BigDecimal.ZERO, new ArrayList<OrderItem>());
         orderWalter.cancelOrder();
         assertEquals(OrderStatus.CANCELLED, orderWalter.getStatus());
     }
 
     @Test
     void shouldNotAddOrderItemInCancelledState(){
-        Order orderJessy = new Order(2L, 2L, "Jessy", "Jessy.pickman@gmail.com",BigDecimal.ZERO);
+        Order orderJessy = new Order(2L, 2L, "Jessy", "Jessy.pickman@gmail.com", OrderStatus.CREATED, BigDecimal.ZERO, new ArrayList<OrderItem>());
         OrderItem orderItemMouse = new OrderItem(1L, 1L, "Mouse", BigDecimal.valueOf(160), 3);
         orderJessy.cancelOrder();
         assertThrows(CannotAddOrderItemException.class,

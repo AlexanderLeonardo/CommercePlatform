@@ -1,4 +1,4 @@
-package commercePlatform.userService.domain.service;
+package commercePlatform.userService.service;
 
 import commercePlatform.userService.api.dto.request.UserRequest;
 import commercePlatform.userService.exception.EmailAlreadyRegisteredException;
@@ -20,10 +20,6 @@ public class UserService {
     public UserService(UserGateway userGateway, UserValidator userValidator) {
         this.userGateway = userGateway;
         this.userValidator = userValidator;
-    }
-
-    public boolean existByEmail(String mail){
-        return getAllUsers().stream().anyMatch( usr -> usr.getEmail().equals(mail));
     }
 
     public User createUser(User user) {

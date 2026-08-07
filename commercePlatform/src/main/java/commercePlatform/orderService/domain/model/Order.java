@@ -19,17 +19,15 @@ public class Order {
     private OrderStatus status;
     private BigDecimal total;
     private List<OrderItem> items;  // representa los productos que tiene el pedido
-    //private Payment paymentMethod;
 
-    public Order(Long id, Long userId, String userName, String userEmail, BigDecimal total) {
+    public Order(Long id, Long userId, String userName, String userEmail, OrderStatus status, BigDecimal total, List<OrderItem> items) {
         this.id = id;
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
-        this.status = OrderStatus.CREATED;
+        this.status = status;
         this.total = total;
-        this.items = new ArrayList<OrderItem>();
-        //this.paymentMethod = paymentMethod;
+        this.items = items;
     }
 
     private Order(){
@@ -90,14 +88,6 @@ public class Order {
     public void setItems(List<OrderItem> items) {
         this.items = items;
     }
-
-    //public Payment getPaymentMethod() {
-    //    return paymentMethod;
-    //}
-
-    //public void setPaymentMethod(Payment paymentMethod) {
-    //    this.paymentMethod = paymentMethod;
-    //}
 
     public void addOrderItem(OrderItem orderItem){
         // Primero verificar que el estado de la orden sea "CREATED" para agregar un nuevo producto al pedido

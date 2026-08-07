@@ -27,4 +27,9 @@ public class InMemoryOrderGateway implements OrderGateway {
         return Optional.ofNullable(order);
     }
 
+    @Override
+    public List<Order> getAllOrders() {
+        return orders;
+    }
+
 }

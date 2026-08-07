@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -39,7 +40,7 @@ public class ConfirmOrderUseCaseTest {
         Long productIdMouse = 1L;
         Long productIdMonitor = 2L;
 
-        Order order = new Order(orderId, 1L, "Sam", "Sam.winchester@gmail.com", new BigDecimal(0));
+        Order order = new Order(orderId, 1L, "Sam", "Sam.winchester@gmail.com", OrderStatus.CREATED, new BigDecimal(0), new ArrayList<OrderItem>());
         OrderItem mouse = new OrderItem(1L, productIdMouse, "Mouse", BigDecimal.valueOf(20), 2);
         OrderItem monitor = new OrderItem(2L, productIdMonitor, "Monitor", BigDecimal.valueOf(45), 3);
         order.addOrderItem(mouse);
@@ -60,7 +61,7 @@ public class ConfirmOrderUseCaseTest {
 
         Long orderId = 2L;
         Long productIdHeadphones = 3L;
-        Order order = new Order(orderId, 2L, "Dean", "Dean.winchester@gmail.com", new BigDecimal(0));
+        Order order = new Order(orderId, 2L, "Dean", "Dean.winchester@gmail.com", OrderStatus.CREATED, new BigDecimal(0), new ArrayList<OrderItem>());
         OrderItem headphones = new OrderItem(3L, productIdHeadphones, "Headphones", BigDecimal.valueOf(12), 2);
         order.addOrderItem(headphones);
         doThrow(new InsufficientStockException())

@@ -11,6 +11,7 @@ import commercePlatform.orderService.exception.EmptyOrderException;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -19,13 +20,13 @@ public class ConfirmOrderUnitTest {
 
     @Test
     void shouldNotConfirmEmptyOrder(){
-        Order orderCastiel = new Order(1L, 1L, "Castiel", "cass.angel@gmail.com", BigDecimal.ZERO);
+        Order orderCastiel = new Order(1L, 1L, "Castiel", "cass.angel@gmail.com", OrderStatus.CREATED, BigDecimal.ZERO, new ArrayList<OrderItem>());
         assertThrows(EmptyOrderException.class, orderCastiel::confirmOrder);
     }
 
     @Test
     void shouldConfirmOrderSuccessfully(){
-        Order orderSam = new Order(2L, 2L, "Sam", "sam.winchester@gmail.com",  BigDecimal.ZERO);
+        Order orderSam = new Order(2L, 2L, "Sam", "sam.winchester@gmail.com", OrderStatus.CREATED, BigDecimal.ZERO, new ArrayList<OrderItem>());
         OrderItem orderItemHeadphones = new OrderItem(1L, 1L, "Headphones", BigDecimal.valueOf(180), 1);
         OrderItem orderItemPendrive = new OrderItem(2L, 2L, "Pendrive", BigDecimal.valueOf(10), 2);
         orderSam.addOrderItem(orderItemHeadphones);
@@ -36,7 +37,7 @@ public class ConfirmOrderUnitTest {
 
     @Test
     void shouldNotModifyOrderInConfirmedState(){
-        Order orderCrowley = new Order(3L, 3L, "Crowley","crowlie.kingofhell@gmail.com", BigDecimal.ZERO);
+        Order orderCrowley = new Order(3L, 3L, "Crowley","crowlie.kingofhell@gmail.com", OrderStatus.CREATED, BigDecimal.ZERO, new ArrayList<OrderItem>());
         OrderItem orderItemSmartTv = new OrderItem(3L, 3L, "SmartTv",BigDecimal.valueOf(430), 1);
         orderCrowley.addOrderItem(orderItemSmartTv);
         orderCrowley.confirmOrder();
@@ -46,7 +47,7 @@ public class ConfirmOrderUnitTest {
 
     @Test
     void shouldNotCancelOrderInConfirmedState(){
-        Order orderKevin = new Order(4L, 4L, "Kevin", "kevin.profeta@gmail.com", BigDecimal.ZERO);
+        Order orderKevin = new Order(4L, 4L, "Kevin", "kevin.profeta@gmail.com", OrderStatus.CREATED, BigDecimal.ZERO, new ArrayList<OrderItem>());
         OrderItem orderItemLaptop = new OrderItem(4L, 4L,"Laptop", BigDecimal.valueOf(800), 1);
         orderKevin.addOrderItem(orderItemLaptop);
         orderKevin.confirmOrder();
@@ -56,7 +57,7 @@ public class ConfirmOrderUnitTest {
 
     @Test
     void shouldApplyDiscountForPaymentStrategy(){
-        Order orderKevin = new Order(5L, 4L, "Kevin", "kevin.profeta@gmail.com", BigDecimal.ZERO);
+        Order orderKevin = new Order(5L, 4L, "Kevin", "kevin.profeta@gmail.com", OrderStatus.CREATED, BigDecimal.ZERO, new ArrayList<OrderItem>());
         OrderItem orderItemMouse = new OrderItem(5L, 5L, "Mouse", BigDecimal.valueOf(120), 3);
         orderKevin.addOrderItem(orderItemMouse);
         orderKevin.confirmOrder();

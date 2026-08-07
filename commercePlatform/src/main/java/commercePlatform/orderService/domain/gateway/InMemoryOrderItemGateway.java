@@ -17,13 +17,7 @@ public class InMemoryOrderItemGateway implements OrderItemGateway {
     }
 
     @Override
-    public Integer orderQuantity(OrderItem orderItem) {
-        return orderItem.getQuantity();
+    public List<OrderItem> getAllOrderItems() {
+        return orderItems;
     }
-
-    @Override
-    public BigDecimal calculateSubtotal(OrderItem orderItem) {
-        return orderItem.calculateSubtotal();
-    }
-
 }
