@@ -30,7 +30,7 @@ public class Order {
         this.items = items;
     }
 
-    private Order(){
+    public Order(){
     }
 
     public Long getId() {
@@ -93,7 +93,7 @@ public class Order {
         // Primero verificar que el estado de la orden sea "CREATED" para agregar un nuevo producto al pedido
         verifyOrderStateForAddOrderItem();
         items.add(orderItem);
-        updateOrderTotal(orderItem.calculateSubtotal());
+        addOrderItemSubtotalInOrderTotal(orderItem.calculateSubtotal());
     }
 
     private void verifyOrderStateForAddOrderItem() {
@@ -102,8 +102,8 @@ public class Order {
         }
     }
 
-    public void updateOrderTotal(BigDecimal subtotalOrderItem){
-        updateOrderTotalWithoutZerosFromDecimals(total.add(subtotalOrderItem));
+    public void addOrderItemSubtotalInOrderTotal(BigDecimal orderItemSubtotal){
+        updateOrderTotalWithoutZerosFromDecimals(total.add(orderItemSubtotal));
     }
 
     public int quantityOfProducts(){
@@ -177,5 +177,9 @@ public class Order {
         if(!status.equals(OrderStatus.CREATED)){
             throw new CannotCancelOrderException(status.toString());
         }
+    }
+
+    public void updateOrderTotal(){
+        total = calculateTotal();
     }
 }

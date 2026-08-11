@@ -2,9 +2,11 @@ package commercePlatform.orderService.service;
 
 import commercePlatform.orderService.domain.gateway.OrderGateway;
 import commercePlatform.orderService.domain.model.Order;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CreateOrderUseCase {
 
     private final OrderGateway orderGateway;

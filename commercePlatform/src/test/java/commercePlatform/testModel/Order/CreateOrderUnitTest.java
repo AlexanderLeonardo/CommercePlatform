@@ -29,7 +29,7 @@ public class CreateOrderUnitTest {
     }
 
     @Test
-    void updateOrderTotal(){
+    void updateOrderTotalAfterAddOrderItems(){
         orderDean.addOrderItem(orderItemTablet);
         orderDean.addOrderItem(orderItemMonitor);
         assertEquals(BigDecimal.valueOf(550), orderDean.calculateTotal());

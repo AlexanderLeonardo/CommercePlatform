@@ -1,27 +1,19 @@
-package commercePlatform.orderService.domain.model;
-
-import jakarta.persistence.*;
+package commercePlatform.orderService.api.dto.response;
 
 import java.math.BigDecimal;
 
-public class OrderItem {
+public class OrderItemResponse {
 
     private Long id;
-    private Long productId;
     private String productName;
     private BigDecimal productPrice;
     private Integer quantity;
 
-    public OrderItem(Long id, Long productId, String productName, BigDecimal productPrice, Integer quantity) {
+    public OrderItemResponse(Long id, String productName, BigDecimal productPrice, Integer quantity) {
         this.id = id;
-        this.productId = productId;
         this.productName = productName;
         this.productPrice = productPrice;
         this.quantity = quantity;
-    }
-
-    public OrderItem(){
-
     }
 
     public Long getId() {
@@ -30,14 +22,6 @@ public class OrderItem {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
     }
 
     public String getProductName() {
@@ -62,13 +46,5 @@ public class OrderItem {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
-
-    public BigDecimal calculateSubtotal(){
-        return productPrice.multiply(BigDecimal.valueOf(quantity));
-    }
-
-    public String productName(){
-        return productName;
     }
 }
