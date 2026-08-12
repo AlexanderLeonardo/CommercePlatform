@@ -2,11 +2,7 @@ package commercePlatform.orderService.domain.model;
 
 import commercePlatform.orderService.domain.OrderStatus;
 import commercePlatform.orderService.exception.*;
-import commercePlatform.orderService.domain.model.PaymentStrategy.Payment;
-import jakarta.persistence.*;
-
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

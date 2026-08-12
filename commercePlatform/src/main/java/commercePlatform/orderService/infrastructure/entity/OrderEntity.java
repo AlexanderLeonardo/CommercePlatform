@@ -1,11 +1,9 @@
 package commercePlatform.orderService.infrastructure.entity;
 
 import commercePlatform.orderService.domain.OrderStatus;
-import commercePlatform.orderService.domain.model.OrderItem;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity

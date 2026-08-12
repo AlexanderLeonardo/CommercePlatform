@@ -1,7 +1,5 @@
 package commercePlatform.orderService.domain.model;
 
-import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 
 public class OrderItem {

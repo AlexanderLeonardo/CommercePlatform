@@ -21,10 +21,9 @@ public class JpaOrderItemRepositoryAdapter implements OrderItemGateway {
     }
 
     @Override
-    public OrderItem saveOrderItem(OrderItem orderItem) {
+    public void saveOrderItem(OrderItem orderItem) {
         OrderItemEntity orderItemEntity = mapper.toEntity(orderItem);
         repository.save(orderItemEntity);
-        return mapper.toDomain(orderItemEntity);
     }
 
     @Override

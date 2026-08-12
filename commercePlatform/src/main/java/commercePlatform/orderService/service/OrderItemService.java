@@ -15,8 +15,8 @@ public class OrderItemService {
         this.orderItemGateway = orderItemGateway;
     }
 
-    public OrderItem createOrderItem(OrderItem orderItem) {
-        return this.orderItemGateway.saveOrderItem(orderItem);
+    public void createOrderItem(OrderItem orderItem) {
+        orderItemGateway.saveOrderItem(orderItem);
     }
 
     public List<OrderItem> getAllOrderItems(){
