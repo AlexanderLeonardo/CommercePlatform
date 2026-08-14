@@ -1,5 +1,7 @@
 package commercePlatform.orderService.domain.model;
 
+import commercePlatform.orderService.exception.InvalidQuantityException;
+
 import java.math.BigDecimal;
 
 public class OrderItem {
@@ -11,12 +13,14 @@ public class OrderItem {
     private Integer quantity;
 
     public OrderItem(Long id, Long productId, String productName, BigDecimal productPrice, Integer quantity) {
+        validationQuantity(quantity);
         this.id = id;
         this.productId = productId;
         this.productName = productName;
         this.productPrice = productPrice;
         this.quantity = quantity;
     }
+
 
     public OrderItem(){
 
@@ -68,5 +72,11 @@ public class OrderItem {
 
     public String productName(){
         return productName;
+    }
+
+    private void validationQuantity(Integer quantity) {
+        if(quantity < 0){
+            throw new InvalidQuantityException();
+        }
     }
 }

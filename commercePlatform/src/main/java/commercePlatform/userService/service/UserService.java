@@ -1,7 +1,6 @@
 package commercePlatform.userService.service;
 
 import commercePlatform.userService.api.dto.request.UserRequest;
-import commercePlatform.userService.exception.EmailAlreadyRegisteredException;
 import commercePlatform.userService.domain.gateway.UserGateway;
 import commercePlatform.userService.domain.model.User;
 import commercePlatform.userService.validator.UserValidator;

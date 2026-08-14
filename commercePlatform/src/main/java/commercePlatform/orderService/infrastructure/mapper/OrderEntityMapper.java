@@ -1,13 +1,8 @@
 package commercePlatform.orderService.infrastructure.mapper;
 
 import commercePlatform.orderService.domain.model.Order;
-import commercePlatform.orderService.domain.model.OrderItem;
 import commercePlatform.orderService.infrastructure.entity.OrderEntity;
-import commercePlatform.orderService.infrastructure.entity.OrderItemEntity;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class OrderEntityMapper {

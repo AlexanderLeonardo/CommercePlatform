@@ -95,13 +95,13 @@ public class Product {
         active = true;
     }
 
-    public void validationPrice(BigDecimal price){
+    private void validationPrice(BigDecimal price){
         if(price.compareTo(BigDecimal.ZERO) <= 0){
             throw new InvalidPriceException();
         }
     }
 
-    public void validationStock(int stock){
+    private void validationStock(int stock){
         if(stock < 0){
             throw new InvalidStockException();
         }

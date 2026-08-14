@@ -23,9 +23,9 @@ public class JpaOrderRepositoryAdapter implements OrderGateway {
 
     @Override
     public Order saveOrder(Order order) {
-        OrderEntity entity = mapper.toEntity(order);
-        OrderEntity saved = repository.save(entity);
-        return mapper.toDomain(saved);
+        OrderEntity orderEntity = mapper.toEntity(order);
+        repository.save(orderEntity);
+        return mapper.toDomain(orderEntity);
     }
 
     @Override
