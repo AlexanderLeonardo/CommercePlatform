@@ -9,4 +9,5 @@ public interface OrderGateway {
     Order saveOrder(Order order);
     Optional<Order> findById(Long id);
     List<Order> getAllOrders();
+    void deleteOrder(Long id);
 }

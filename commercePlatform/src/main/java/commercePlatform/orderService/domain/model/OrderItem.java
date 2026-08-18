@@ -63,6 +63,7 @@ public class OrderItem {
     }
 
     public void setQuantity(Integer quantity) {
+        validationQuantity(quantity);
         this.quantity = quantity;
     }
 

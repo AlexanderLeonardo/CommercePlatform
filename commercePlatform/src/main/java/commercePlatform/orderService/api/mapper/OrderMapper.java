@@ -1,9 +1,14 @@
 package commercePlatform.orderService.api.mapper;
 
 import commercePlatform.orderService.api.dto.request.CreateOrderRequest;
+import commercePlatform.orderService.api.dto.request.OrderItemRequest;
 import commercePlatform.orderService.api.dto.response.OrderResponse;
 import commercePlatform.orderService.domain.model.Order;
+import commercePlatform.orderService.domain.model.OrderItem;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class OrderMapper {
@@ -15,11 +20,15 @@ public class OrderMapper {
     }
 
     public Order toDomain(CreateOrderRequest request){
+
+        List<OrderItem> items = new ArrayList<>();
+        for(OrderItemRequest itemRequest: request.items()){
+            items.add(orderItemMapper.toDomain(itemRequest));
+        }
+
         Order order = new Order();
         order.setUserId(request.userId());
-        order.setItems(request.items().stream()
-                .map(orderItemMapper::toDomain)
-                .toList());
+        order.setItems(items);
         return order;
     }
 

@@ -23,9 +23,9 @@ public class JpaOrderRepositoryAdapter implements OrderGateway {
 
     @Override
     public Order saveOrder(Order order) {
-        OrderEntity orderEntity = mapper.toEntity(order);
-        repository.save(orderEntity);
-        return mapper.toDomain(orderEntity);
+        OrderEntity entity = mapper.toEntity(order);
+        OrderEntity save = repository.save(entity);
+        return mapper.toDomain(save);
     }
 
     @Override
@@ -38,5 +38,10 @@ public class JpaOrderRepositoryAdapter implements OrderGateway {
         return repository.findAll().stream()
                 .map(mapper::toDomain)
                 .toList();
+    }
+
+    @Override
+    public void deleteOrder(Long id) {
+        repository.deleteById(id);
     }
 }

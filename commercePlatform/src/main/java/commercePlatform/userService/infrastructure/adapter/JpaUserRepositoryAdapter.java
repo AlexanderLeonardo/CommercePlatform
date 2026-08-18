@@ -23,9 +23,9 @@ public class JpaUserRepositoryAdapter implements UserGateway {
 
     @Override
     public User saveUser(User user) {
-        UserEntity userEntity = mapper.toEntity(user);
-        repository.save(userEntity);
-        return mapper.toDomain(userEntity);
+        UserEntity entity = mapper.toEntity(user);
+        UserEntity save = repository.save(entity);
+        return mapper.toDomain(save);
     }
 
     @Override

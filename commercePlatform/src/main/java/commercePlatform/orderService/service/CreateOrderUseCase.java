@@ -13,6 +13,7 @@ import commercePlatform.userService.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CreateOrderUseCase {
@@ -39,6 +40,10 @@ public class CreateOrderUseCase {
         return this.orderGateway.getAllOrders();
     }
 
+    public Optional<Order> getOrderById(Long idOrder){
+        return this.orderGateway.findById(idOrder);
+    }
+
     public void configOrderItems(Order order){
         for(OrderItem item: order.getItems()){
             Product product = productGateway.findById(item.getProductId()).orElseThrow(() -> new ProductNotFoundException(item.getProductId()));
@@ -51,6 +56,10 @@ public class CreateOrderUseCase {
         User user = userGateway.getUserById(order.getUserId()).orElseThrow(() -> new UserNotFoundException(order.getUserId()));
         order.setUserName(user.getName());
         order.setUserEmail(user.getEmail());
+    }
+
+    public void deleteOrder(Long orderId){
+        orderGateway.deleteOrder(orderId);
     }
 
 }

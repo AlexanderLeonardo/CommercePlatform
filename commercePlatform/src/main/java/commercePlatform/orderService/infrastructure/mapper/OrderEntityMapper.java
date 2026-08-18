@@ -1,8 +1,13 @@
 package commercePlatform.orderService.infrastructure.mapper;
 
 import commercePlatform.orderService.domain.model.Order;
+import commercePlatform.orderService.domain.model.OrderItem;
 import commercePlatform.orderService.infrastructure.entity.OrderEntity;
+import commercePlatform.orderService.infrastructure.entity.OrderItemEntity;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class OrderEntityMapper {
@@ -15,18 +20,26 @@ public class OrderEntityMapper {
 
     public OrderEntity toEntity(Order order){
 
+        List<OrderItemEntity> itemsEntities = new ArrayList<>();
+        for(OrderItem item: order.getItems()){
+            itemsEntities.add(orderItemEntityMapper.toEntity(item));
+        }
+
         return new OrderEntity(order.getId(),
                 order.getUserId(),
                 order.getUserName(),
                 order.getUserEmail(),
                 order.getStatus(),
                 order.getTotal(),
-                order.getItems().stream()
-                        .map(orderItemEntityMapper::toEntity)
-                        .toList());
+                itemsEntities);
     }
 
     public Order toDomain(OrderEntity orderEntity){
+
+        List<OrderItem> items = new ArrayList<>();
+        for(OrderItemEntity itemEntity: orderEntity.getItems()){
+            items.add(orderItemEntityMapper.toDomain(itemEntity));
+        }
 
         return new Order(orderEntity.getId(),
                 orderEntity.getUserId(),
@@ -34,8 +47,6 @@ public class OrderEntityMapper {
                 orderEntity.getUserEmail(),
                 orderEntity.getStatus(),
                 orderEntity.getTotal(),
-                orderEntity.getItems().stream()
-                        .map(orderItemEntityMapper::toDomain)
-                        .toList());
+                items);
     }
 }

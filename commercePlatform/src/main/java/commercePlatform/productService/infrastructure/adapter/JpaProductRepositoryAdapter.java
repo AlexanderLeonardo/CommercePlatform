@@ -26,9 +26,9 @@ public class JpaProductRepositoryAdapter implements ProductGateway, InventoryGat
 
     @Override
     public Product saveProduct(Product product) {
-        ProductEntity productEntity = mapper.toEntity(product);
-        repository.save(productEntity);
-        return mapper.toDomain(productEntity);
+        ProductEntity entity = mapper.toEntity(product);
+        ProductEntity save = repository.save(entity);
+        return mapper.toDomain(save);
     }
 
     @Override
