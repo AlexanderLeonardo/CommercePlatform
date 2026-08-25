@@ -5,7 +5,10 @@ import commercePlatform.orderService.domain.OrderStatus;
 import commercePlatform.orderService.domain.gateway.OrderGateway;
 import commercePlatform.orderService.domain.model.Order;
 import commercePlatform.orderService.domain.model.OrderItem;
+import commercePlatform.orderService.domain.model.PaymentStrategy.CashPayment;
+import commercePlatform.orderService.domain.model.PaymentStrategy.CreditCardPayment;
 import commercePlatform.orderService.domain.model.PaymentStrategy.PaymentMethod;
+import commercePlatform.orderService.factory.PaymentFactory;
 import commercePlatform.orderService.service.ConfirmOrderUseCase;
 import commercePlatform.productService.domain.gateway.InventoryGateway;
 import commercePlatform.productService.exception.InsufficientStockException;
@@ -32,6 +35,9 @@ public class ConfirmOrderUseCaseTest {
     @Mock
     private InventoryGateway inventoryGateway;
 
+    @Mock
+    private PaymentFactory paymentFactory;
+
     @InjectMocks
     private ConfirmOrderUseCase useCase;
 
@@ -48,14 +54,15 @@ public class ConfirmOrderUseCaseTest {
         order.addOrderItem(mouse);
         order.addOrderItem(monitor);
 
-        when(orderGateway.findById(orderId)).thenReturn(Optional.of(order));
+        when(paymentFactory.getPayment(confirmOrderRequest.paymentMethod())).thenReturn(new CashPayment());
 
-        useCase.confirmOrder(orderId, confirmOrderRequest);
+        useCase.confirmOrder(order, confirmOrderRequest);
 
         verify(inventoryGateway).reserveStock(productIdMouse, 2);
         verify(inventoryGateway).reserveStock(productIdMonitor, 3);
         verify(orderGateway).saveOrder(order);
         assertEquals(OrderStatus.CONFIRMED, order.getStatus());
+        assertEquals(BigDecimal.valueOf(148.75), order.getTotal());
     }
 
     @Test
@@ -71,9 +78,9 @@ public class ConfirmOrderUseCaseTest {
                 .when(inventoryGateway)
                 .reserveStock(anyLong(), anyInt());
 
-        when(orderGateway.findById(orderId)).thenReturn(Optional.of(order));
+        when(paymentFactory.getPayment(confirmOrderRequest.paymentMethod())).thenReturn(new CreditCardPayment());
         assertThrows(InsufficientStockException.class,
-                () -> useCase.confirmOrder(orderId, confirmOrderRequest));
+                () -> useCase.confirmOrder(order, confirmOrderRequest));
         assertEquals(OrderStatus.CREATED, order.getStatus());
     }
 }

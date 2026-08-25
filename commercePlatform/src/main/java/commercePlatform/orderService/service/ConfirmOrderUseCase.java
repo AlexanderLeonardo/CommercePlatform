@@ -8,9 +8,11 @@ import commercePlatform.orderService.domain.model.PaymentStrategy.Payment;
 import commercePlatform.orderService.exception.OrderNotFoundException;
 import commercePlatform.orderService.factory.PaymentFactory;
 import commercePlatform.productService.domain.gateway.InventoryGateway;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
+@Service
 public class ConfirmOrderUseCase {
 
     private final OrderGateway orderGateway;
@@ -23,16 +25,15 @@ public class ConfirmOrderUseCase {
         this.paymentFactory = paymentFactory;
     }
 
-    public void confirmOrder(Long idOrder, ConfirmOrderRequest confirmOrderRequest){
+    public Order confirmOrder(Order order, ConfirmOrderRequest confirmOrderRequest){
         Payment payment = paymentFactory.getPayment(confirmOrderRequest.paymentMethod());
-        Order order = orderGateway.findById(idOrder).orElseThrow(() -> new OrderNotFoundException(idOrder));
         for(OrderItem item: order.getItems()){
             inventoryGateway.reserveStock(item.getProductId(), item.getQuantity());
         }
         BigDecimal orderTotalWithDiscount = payment.payWithADiscountApplied(order.getTotal());
         order.updateOrderTotalWithoutZerosFromDecimals(orderTotalWithDiscount);
         order.confirmOrder();
-        orderGateway.saveOrder(order);
+        return this.orderGateway.saveOrder(order);
     }
 
 }
