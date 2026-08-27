@@ -77,10 +77,7 @@ public class UserController {
     }
 
     @Operation(summary = "Elimina un usuario existente")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Usuario encontrado y eliminado"),
-            @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
-    })
+    @ApiResponse(responseCode = "204", description = "Solicitud procesada. Usuario eliminado")
     @SuppressWarnings("NullableProblems")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){

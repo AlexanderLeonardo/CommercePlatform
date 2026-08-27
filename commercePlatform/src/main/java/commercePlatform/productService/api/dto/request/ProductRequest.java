@@ -8,11 +8,11 @@ public record ProductRequest (
 
     @Schema(description = "Nombre del producto", example = "Notebook Lenovo ThinkPad")
     String name,
-    @Schema(description = "Descripción del producto")
+    @Schema(description = "Descripción del producto", example = "Notebook Lenovo with SDD 256GB")
     String description,
-    @Schema(description = "Precio del producto")
+    @Schema(description = "Precio del producto", example = "1200")
     BigDecimal price,
-    @Schema(description = "Stock disponible del producto")
+    @Schema(description = "Stock disponible del producto", example = "25")
     int stock,
-    @Schema(description = "Flag que determina si un producto está disponible o no")
+    @Schema(description = "Flag que determina si un producto está disponible o no", example = "true")
     boolean active) {}

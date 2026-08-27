@@ -154,10 +154,7 @@ public class ProductController {
     }
 
     @Operation(summary = "Elimina un producto existente")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Producto encontrado y eliminado"),
-            @ApiResponse(responseCode = "404", description = "Producto no encontrado")
-    })
+    @ApiResponse(responseCode = "204", description = "Solicitud procesada. Producto eliminado")
     @SuppressWarnings("NullableProblems")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){

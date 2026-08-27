@@ -1,17 +1,24 @@
 package commercePlatform.orderService.api.dto.response;
 
 import commercePlatform.orderService.domain.OrderStatus;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public class OrderResponse {
 
+    @Schema(description = "ID del pedido", example = "7")
     private Long id;
+    @Schema(description = "Nombre del usuario", example = "Juan Perez")
     private String userName;
+    @Schema(description = "Email del usuario", example = "juan.perez@gmail.com")
     private String userEmail;
+    @Schema(description = "Estado en el que se encuentra el pedido", example = "CREATED")
     private OrderStatus status;
+    @Schema(description = "Costo total acumulado del pedido", example = "1500.50")
     private BigDecimal total;
+    @Schema(description = "Listado de productos que el usuario agregó al pedido")
     private List<OrderItemResponse> items;
 
     public OrderResponse(Long id, String userName, String userEmail, OrderStatus status, BigDecimal total, List<OrderItemResponse> items) {

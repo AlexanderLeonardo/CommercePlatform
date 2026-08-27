@@ -1,14 +1,22 @@
 package commercePlatform.productService.api.dto.response;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.math.BigDecimal;
 
 public class ProductResponse {
 
+    @Schema(description = "ID del producto", example = "4")
     private Long id;
+    @Schema(description = "Nombre del producto", example = "Monitor LG")
     private String name;
+    @Schema(description = "Descripción del producto", example = "Monitor LG 15 pulgadas con HDMI")
     private String description;
+    @Schema(description = "Precio del producto", example = "450")
     private BigDecimal price;
+    @Schema(description = "Stock disponible del producto", example = "30")
     private int stock;
+    @Schema(description = "Flag que determina si un producto está disponible o no", example = "true")
     private boolean active;
 
     public ProductResponse(Long id, String name, String description, BigDecimal price, int stock, boolean active) {

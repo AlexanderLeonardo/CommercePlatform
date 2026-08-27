@@ -9,6 +9,9 @@ import commercePlatform.orderService.domain.model.Order;
 import commercePlatform.orderService.service.AddItemUseCase;
 import commercePlatform.orderService.service.ConfirmOrderUseCase;
 import commercePlatform.orderService.service.CreateOrderUseCase;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +34,8 @@ public class OrderController {
         this.mapper = mapper;
     }
 
+    @Operation(summary = "Crear un pedido nuevo")
+    @ApiResponse(responseCode = "200", description = "Pedido creado")
     @PostMapping
     public OrderResponse createOrder(@RequestBody CreateOrderRequest request){
         Order order = mapper.toDomain(request);
@@ -38,11 +43,22 @@ public class OrderController {
         return mapper.toResponse(save);
     }
 
+    @Operation(summary = "Obtiene todos los pedidos del sistema")
+    @ApiResponse(responseCode = "200", description = "Pedidos del sistema")
     @GetMapping
     public List<Order> getAllOrders(){
         return createOrderUseCase.getAllOrders();
     }
 
+
+    @Operation(
+            summary = "Obtiene un pedido por ID",
+            description = "Devuelve la información completa de un pedido existente"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Pedido encontrado"),
+        @ApiResponse(responseCode = "404", description = "Pedido no encontrado")
+    })
     @SuppressWarnings("NullableProblems")
     @GetMapping("/{id}")
     public ResponseEntity<OrderResponse> getOrder(@PathVariable Long id){
@@ -51,6 +67,14 @@ public class OrderController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Operation(
+            summary = "Agrega un nuevo producto al pedido",
+            description = "Se agrega al pedido existente un nuevo producto, con una determinada cantidad"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Pedido encontrado y producto agregado al mismo"),
+            @ApiResponse(responseCode = "404", description = "Pedido no encontrado")
+    })
     @SuppressWarnings("NullableProblems")
     @PostMapping("/{id}/items")
     public ResponseEntity<OrderResponse> addOrderItem(@PathVariable Long id, @RequestBody OrderItemRequest request){
@@ -60,6 +84,8 @@ public class OrderController {
                             .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Elimina un pedido existente")
+    @ApiResponse(responseCode = "204", description = "Solicitud procesada. Pedido eliminado")
     @SuppressWarnings("NullableProblems")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long id){
@@ -67,6 +93,14 @@ public class OrderController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(
+            summary = "Confirma un pedido",
+            description = "Se confirma un pedido, pasando por BODY una request que contenga la forma de pago del cliente"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Pedido encontrado y confirmado"),
+            @ApiResponse(responseCode = "404", description = "Pedido no encontrado")
+    })
     @SuppressWarnings("NullableProblems")
     @PostMapping("/{id}/confirm")
     public ResponseEntity<OrderResponse> confirmOrder(@PathVariable Long id, @RequestBody ConfirmOrderRequest request){
