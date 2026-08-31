@@ -8,6 +8,7 @@ import commercePlatform.userService.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class UserController {
     @Operation(summary = "Crea un usuario nuevo")
     @ApiResponse(responseCode = "200", description = "Usuario creado")
     @PostMapping
-    public UserResponse createUser(@RequestBody UserRequest userRequest){
+    public UserResponse createUser(@Valid @RequestBody UserRequest userRequest){
         User user = mapper.toDomain(userRequest);
         User saved = service.createUser(user);
         return mapper.toResponse(saved);

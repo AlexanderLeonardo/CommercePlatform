@@ -9,6 +9,7 @@ import commercePlatform.productService.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,7 @@ public class ProductController {
     @Operation(summary = "Crea un producto nuevo")
     @ApiResponse(responseCode = "200", description = "Producto creado")
     @PostMapping
-    public ProductResponse createProduct(@RequestBody ProductRequest productRequest){
+    public ProductResponse createProduct(@Valid @RequestBody ProductRequest productRequest){
         Product product = mapper.toDomain(productRequest);
         Product saved = service.createProduct(product);
         return mapper.toResponse(saved);
@@ -88,7 +89,7 @@ public class ProductController {
     })
     @SuppressWarnings("NullableProblems")
     @PatchMapping("/{id}")
-    public ResponseEntity<ProductResponse> partialUpdate(@PathVariable Long id, @RequestBody PatchProductRequest patchProductRequest){
+    public ResponseEntity<ProductResponse> partialUpdate(@PathVariable Long id, @Valid @RequestBody PatchProductRequest patchProductRequest){
         Optional<Product> productFindById = service.getProductById(id);
         return productFindById.map(oldProduct ->
                 ResponseEntity.ok(mapper.toResponse(service.partialUpdateProduct(oldProduct, patchProductRequest))))
