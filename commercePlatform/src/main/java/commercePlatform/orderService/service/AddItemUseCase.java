@@ -23,6 +23,8 @@ public class AddItemUseCase {
     public Order addOrderItem(Order order, OrderItemRequest orderItemRequest){
         Product product = productGateway.findById(orderItemRequest.productId())
                                         .orElseThrow(() -> new ProductNotFoundException(orderItemRequest.productId()));
+        product.verifyIfIsActive();
+        product.verifyCurrentStock();
         OrderItem newItem = new OrderItem();
         newItem.setProductId(product.getId());
         newItem.setProductName(product.getName());

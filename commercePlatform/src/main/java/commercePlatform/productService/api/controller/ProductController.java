@@ -72,7 +72,7 @@ public class ProductController {
     })
     @SuppressWarnings("NullableProblems")
     @PutMapping("/{id}")
-    public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id, @RequestBody ProductRequest productRequest){
+    public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductRequest productRequest){
         Optional<Product> productFindById = service.getProductById(id);
         return productFindById.map(oldProduct ->
                 ResponseEntity.ok(mapper.toResponse(service.updateProduct(oldProduct, productRequest))))

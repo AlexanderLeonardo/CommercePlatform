@@ -1,8 +1,6 @@
 package commercePlatform.productService.domain.model;
 
-import commercePlatform.productService.exception.InsufficientStockException;
-import commercePlatform.productService.exception.InvalidPriceException;
-import commercePlatform.productService.exception.InvalidStockException;
+import commercePlatform.productService.exception.*;
 
 import java.math.BigDecimal;
 
@@ -104,6 +102,18 @@ public class Product {
     private void validationStock(int stock){
         if(stock < 0){
             throw new InvalidStockException();
+        }
+    }
+
+    public void verifyCurrentStock(){
+        if(this.stock == 0){
+            throw new ZeroStockException(this.name);
+        }
+    }
+
+    public void verifyIfIsActive(){
+        if(!this.active){
+            throw new ProductDisabledException(this.name);
         }
     }
 }

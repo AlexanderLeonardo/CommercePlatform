@@ -38,8 +38,7 @@ public class InMemoryProductGateway implements ProductGateway, InventoryGateway 
     }
 
     @Override
-    public void reserveStock(Long id, int quantity) {
-        Product product = findById(id).orElseThrow(() -> new ProductNotFoundException(id));
+    public void reserveStock(Product product, int quantity) {
         product.decreaseStock(quantity);
     }
 }

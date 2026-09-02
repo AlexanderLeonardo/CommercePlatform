@@ -47,6 +47,8 @@ public class CreateOrderUseCase {
     public void configOrderItems(Order order){
         for(OrderItem item: order.getItems()){
             Product product = productGateway.findById(item.getProductId()).orElseThrow(() -> new ProductNotFoundException(item.getProductId()));
+            product.verifyIfIsActive();
+            product.verifyCurrentStock();
             item.setProductName(product.getName());
             item.setProductPrice(product.getPrice());
         }

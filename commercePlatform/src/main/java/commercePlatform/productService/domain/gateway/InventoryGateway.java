@@ -1,6 +1,8 @@
 package commercePlatform.productService.domain.gateway;
 
+import commercePlatform.productService.domain.model.Product;
+
 public interface InventoryGateway {
 
-    void reserveStock(Long id, int quantity);
+    void reserveStock(Product product, int quantity);
 }
