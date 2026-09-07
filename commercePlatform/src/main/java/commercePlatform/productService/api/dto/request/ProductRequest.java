@@ -8,13 +8,13 @@ import java.math.BigDecimal;
 
 public record ProductRequest (
 
-    @NotBlank
+    @NotBlank(message = "El nombre es obligatorio")
     @Schema(description = "Nombre del producto", example = "Notebook Lenovo ThinkPad")
     String name,
-    @NotBlank
+    @NotBlank(message = "La descripción es obligatoria")
     @Schema(description = "Descripción del producto", example = "Notebook Lenovo with SDD 256GB")
     String description,
-    @NotNull
+    @NotNull(message = "El precio es obligatorio")
     @Schema(description = "Precio del producto", example = "1200")
     BigDecimal price,
     @Schema(description = "Stock disponible del producto", example = "25")
