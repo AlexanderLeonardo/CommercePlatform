@@ -80,7 +80,7 @@ public class Product {
 
     public void decreaseStock(int quantity){
         if(quantity > stock){ // First check new stock
-            throw new InsufficientStockException();
+            throw new InsufficientStockException(this.name);
         }
         stock -= quantity;
     }

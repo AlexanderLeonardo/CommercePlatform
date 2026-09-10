@@ -85,7 +85,7 @@ public class ConfirmOrderUseCaseTest {
         Order order = new Order(orderId, 2L, "Dean", "Dean.winchester@gmail.com", OrderStatus.CREATED, new BigDecimal(0), new ArrayList<OrderItem>());
         OrderItem itemHeadphones = new OrderItem(3L, productIdHeadphones, "Headphones", BigDecimal.valueOf(12), 2);
         order.addOrderItem(itemHeadphones);
-        doThrow(new InsufficientStockException())
+        doThrow(new InsufficientStockException(headphones.getName()))
                 .when(inventoryGateway)
                 .reserveStock(any(), anyInt());
 

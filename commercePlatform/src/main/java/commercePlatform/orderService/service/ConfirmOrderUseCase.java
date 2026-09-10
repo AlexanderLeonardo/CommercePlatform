@@ -30,12 +30,13 @@ public class ConfirmOrderUseCase {
         this.productGateway = productGateway;
     }
 
-    //@Transactional
+    @Transactional
     public Order confirmOrder(Order order, ConfirmOrderRequest confirmOrderRequest){
         Payment payment = paymentFactory.getPayment(confirmOrderRequest.paymentMethod());
         for(OrderItem item: order.getItems()){
             Product product = productGateway.findById(item.getProductId())
                                             .orElseThrow(() -> new ProductNotFoundException(item.getProductId()));
+            product.verifyIfIsActive();
             product.verifyCurrentStock();
             inventoryGateway.reserveStock(product, item.getQuantity());
         }
