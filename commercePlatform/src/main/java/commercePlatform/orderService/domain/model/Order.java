@@ -110,7 +110,6 @@ public class Order {
         // Primero verificar que el pedido no esté vacío. Si está vacío, arrojar una excepción
         // del tipo "EmptyOrderException"
         verifyOrderNotEmpty();
-        //updateOrderTotalWithoutZerosFromDecimals(paymentMethod.payWithADiscountApplied(total));
         status = OrderStatus.CONFIRMED;
     }
 

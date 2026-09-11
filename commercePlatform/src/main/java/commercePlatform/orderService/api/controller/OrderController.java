@@ -7,6 +7,7 @@ import commercePlatform.orderService.api.dto.response.OrderResponse;
 import commercePlatform.orderService.api.mapper.OrderMapper;
 import commercePlatform.orderService.domain.model.Order;
 import commercePlatform.orderService.service.AddItemUseCase;
+import commercePlatform.orderService.service.CancelOrderUseCase;
 import commercePlatform.orderService.service.ConfirmOrderUseCase;
 import commercePlatform.orderService.service.CreateOrderUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,12 +27,14 @@ public class OrderController {
     private final AddItemUseCase addItemUseCase;
     private final ConfirmOrderUseCase confirmOrderUseCase;
     private final OrderMapper mapper;
+    private final CancelOrderUseCase cancelOrderUseCase;
 
-    public OrderController(CreateOrderUseCase createOrderUseCase, AddItemUseCase addItemUseCase, ConfirmOrderUseCase confirmOrderUseCase, OrderMapper mapper) {
+    public OrderController(CreateOrderUseCase createOrderUseCase, AddItemUseCase addItemUseCase, ConfirmOrderUseCase confirmOrderUseCase, OrderMapper mapper, CancelOrderUseCase cancelOrderUseCase) {
         this.createOrderUseCase = createOrderUseCase;
         this.addItemUseCase = addItemUseCase;
         this.confirmOrderUseCase = confirmOrderUseCase;
         this.mapper = mapper;
+        this.cancelOrderUseCase = cancelOrderUseCase;
     }
 
     @Operation(summary = "Crear un pedido nuevo")
@@ -107,6 +110,15 @@ public class OrderController {
         Optional<Order> orderFindById = createOrderUseCase.getOrderById(id);
         return orderFindById.map(order -> ResponseEntity.ok
                                                 (mapper.toResponse(confirmOrderUseCase.confirmOrder(order, request))))
+                            .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @SuppressWarnings("NullableProblems")
+    @PostMapping("/{id}/cancel")
+    public ResponseEntity<OrderResponse> cancelOrder(@PathVariable Long id){
+        Optional<Order> orderFindById = createOrderUseCase.getOrderById(id);
+        return orderFindById.map(order -> ResponseEntity.ok
+                                               (mapper.toResponse(cancelOrderUseCase.cancelOrder(order))))
                             .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
