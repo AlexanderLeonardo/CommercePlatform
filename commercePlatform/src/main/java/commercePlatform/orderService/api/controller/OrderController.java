@@ -2,14 +2,12 @@ package commercePlatform.orderService.api.controller;
 
 import commercePlatform.orderService.api.dto.request.ConfirmOrderRequest;
 import commercePlatform.orderService.api.dto.request.CreateOrderRequest;
+import commercePlatform.orderService.api.dto.request.ModifyOrderItemRequest;
 import commercePlatform.orderService.api.dto.request.OrderItemRequest;
 import commercePlatform.orderService.api.dto.response.OrderResponse;
 import commercePlatform.orderService.api.mapper.OrderMapper;
 import commercePlatform.orderService.domain.model.Order;
-import commercePlatform.orderService.service.AddItemUseCase;
-import commercePlatform.orderService.service.CancelOrderUseCase;
-import commercePlatform.orderService.service.ConfirmOrderUseCase;
-import commercePlatform.orderService.service.CreateOrderUseCase;
+import commercePlatform.orderService.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -28,13 +26,15 @@ public class OrderController {
     private final ConfirmOrderUseCase confirmOrderUseCase;
     private final OrderMapper mapper;
     private final CancelOrderUseCase cancelOrderUseCase;
+    private final ModifyOrderUserCase modifyOrderUserCase;
 
-    public OrderController(CreateOrderUseCase createOrderUseCase, AddItemUseCase addItemUseCase, ConfirmOrderUseCase confirmOrderUseCase, OrderMapper mapper, CancelOrderUseCase cancelOrderUseCase) {
+    public OrderController(CreateOrderUseCase createOrderUseCase, AddItemUseCase addItemUseCase, ConfirmOrderUseCase confirmOrderUseCase, OrderMapper mapper, CancelOrderUseCase cancelOrderUseCase, ModifyOrderUserCase modifyOrderUserCase) {
         this.createOrderUseCase = createOrderUseCase;
         this.addItemUseCase = addItemUseCase;
         this.confirmOrderUseCase = confirmOrderUseCase;
         this.mapper = mapper;
         this.cancelOrderUseCase = cancelOrderUseCase;
+        this.modifyOrderUserCase = modifyOrderUserCase;
     }
 
     @Operation(summary = "Crear un pedido nuevo")
@@ -79,7 +79,7 @@ public class OrderController {
             @ApiResponse(responseCode = "404", description = "Pedido no encontrado")
     })
     @SuppressWarnings("NullableProblems")
-    @PostMapping("/{id}/items")
+    @PatchMapping("/{id}/items")
     public ResponseEntity<OrderResponse> addOrderItem(@PathVariable Long id, @RequestBody OrderItemRequest request){
         Optional<Order> orderFindById = createOrderUseCase.getOrderById(id);
         return orderFindById.map(order -> ResponseEntity.ok
@@ -105,7 +105,7 @@ public class OrderController {
             @ApiResponse(responseCode = "404", description = "Pedido no encontrado")
     })
     @SuppressWarnings("NullableProblems")
-    @PostMapping("/{id}/confirm")
+    @PatchMapping("/{id}/confirm")
     public ResponseEntity<OrderResponse> confirmOrder(@PathVariable Long id, @RequestBody ConfirmOrderRequest request){
         Optional<Order> orderFindById = createOrderUseCase.getOrderById(id);
         return orderFindById.map(order -> ResponseEntity.ok
@@ -114,11 +114,21 @@ public class OrderController {
     }
 
     @SuppressWarnings("NullableProblems")
-    @PostMapping("/{id}/cancel")
+    @PatchMapping("/{id}/cancel")
     public ResponseEntity<OrderResponse> cancelOrder(@PathVariable Long id){
         Optional<Order> orderFindById = createOrderUseCase.getOrderById(id);
         return orderFindById.map(order -> ResponseEntity.ok
                                                (mapper.toResponse(cancelOrderUseCase.cancelOrder(order))))
+                            .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @SuppressWarnings("NullableProblems")
+    @PatchMapping("/{id}/modify")
+    public ResponseEntity<OrderResponse> modifyOrder(@PathVariable Long id, @RequestBody ModifyOrderItemRequest request){
+        Optional<Order> orderFindById = createOrderUseCase.getOrderById(id);
+        return orderFindById.map(order -> ResponseEntity.ok(
+                                                mapper.toResponse(modifyOrderUserCase.modifyOrder
+                                                                 (order, request.idOrderItem(), request.quantity()))))
                             .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

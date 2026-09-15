@@ -131,10 +131,13 @@ public class Order {
         // Por el momento, solo se puede modificar la cantidad del pedido de determinado producto
         // No se puede modificar un pedido que esté confirmado o cancelado.
         verifyOrderStateForModify();
-        if(findOrderItemById(idOrderItem).isPresent()){
-            OrderItem updateOrderItem = findOrderItemById(idOrderItem).get();
+        Optional<OrderItem> itemById = findOrderItemById(idOrderItem);
+        if(itemById.isPresent()){
+            OrderItem updateOrderItem = itemById.get();
             updateQuantityOrderItem(updateOrderItem, newQuantity);
             this.total = calculateTotal();
+        } else {
+            throw new OrderItemNotFoundException(idOrderItem);
         }
     }
 

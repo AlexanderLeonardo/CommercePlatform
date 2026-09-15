@@ -59,6 +59,8 @@ public class CreateOrderUnitTest {
     void shouldModifyOrderInCreateState(){
         orderDean.addOrderItem(orderItemTablet);
         orderDean.addOrderItem(orderItemMonitor);
+        assertEquals(BigDecimal.valueOf(550), orderDean.getTotal());
+        assertEquals(BigDecimal.valueOf(550), orderDean.calculateTotal());
         orderDean.modifyOrderItemWithId(2L, 6);
         assertEquals(BigDecimal.valueOf(1150), orderDean.getTotal());
         assertEquals(BigDecimal.valueOf(1150), orderDean.calculateTotal());
