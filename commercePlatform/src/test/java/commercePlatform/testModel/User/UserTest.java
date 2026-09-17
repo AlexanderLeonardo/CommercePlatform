@@ -27,7 +27,7 @@ public class UserTest {
     void shouldNotCreateUserWithEmailAlreadyExist(){
         User dean = new User(2L, "Dean", "dean.winchester@gmail.com", "kansas 666");
         User userSaved = userService.createUser(dean);
-        System.out.print("First user create: " + userSaved.getName());
+        System.out.print("First user create: " + userSaved.getName() + "\n");
         User sam= new User(3L, "Sam", "dean.winchester@gmail.com", "oklahoma 742" );
         assertThrows(EmailAlreadyRegisteredException.class,
                 () -> userService.createUser(sam));

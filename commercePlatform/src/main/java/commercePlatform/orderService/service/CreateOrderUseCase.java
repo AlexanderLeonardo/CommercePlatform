@@ -36,14 +36,6 @@ public class CreateOrderUseCase {
         return this.orderGateway.saveOrder(order);
     }
 
-    public List<Order> getAllOrders(){
-        return this.orderGateway.getAllOrders();
-    }
-
-    public Optional<Order> getOrderById(Long idOrder){
-        return this.orderGateway.findById(idOrder);
-    }
-
     public void configOrderItems(Order order){
         for(OrderItem item: order.getItems()){
             Product product = productGateway.findById(item.getProductId()).orElseThrow(() -> new ProductNotFoundException(item.getProductId()));
@@ -58,10 +50,6 @@ public class CreateOrderUseCase {
         User user = userGateway.getUserById(order.getUserId()).orElseThrow(() -> new UserNotFoundException(order.getUserId()));
         order.setUserName(user.getName());
         order.setUserEmail(user.getEmail());
-    }
-
-    public void deleteOrder(Long orderId){
-        orderGateway.deleteOrder(orderId);
     }
 
 }

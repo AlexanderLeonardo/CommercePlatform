@@ -21,6 +21,7 @@ import java.util.Optional;
 @RequestMapping("/orders")
 public class OrderController {
 
+    private final OrderService orderService;
     private final CreateOrderUseCase createOrderUseCase;
     private final AddItemUseCase addItemUseCase;
     private final ConfirmOrderUseCase confirmOrderUseCase;
@@ -28,7 +29,8 @@ public class OrderController {
     private final CancelOrderUseCase cancelOrderUseCase;
     private final ModifyOrderUserCase modifyOrderUserCase;
 
-    public OrderController(CreateOrderUseCase createOrderUseCase, AddItemUseCase addItemUseCase, ConfirmOrderUseCase confirmOrderUseCase, OrderMapper mapper, CancelOrderUseCase cancelOrderUseCase, ModifyOrderUserCase modifyOrderUserCase) {
+    public OrderController(OrderService orderService, CreateOrderUseCase createOrderUseCase, AddItemUseCase addItemUseCase, ConfirmOrderUseCase confirmOrderUseCase, OrderMapper mapper, CancelOrderUseCase cancelOrderUseCase, ModifyOrderUserCase modifyOrderUserCase) {
+        this.orderService = orderService;
         this.createOrderUseCase = createOrderUseCase;
         this.addItemUseCase = addItemUseCase;
         this.confirmOrderUseCase = confirmOrderUseCase;
@@ -50,7 +52,7 @@ public class OrderController {
     @ApiResponse(responseCode = "200", description = "Pedidos del sistema")
     @GetMapping
     public List<Order> getAllOrders(){
-        return createOrderUseCase.getAllOrders();
+        return orderService.getAllOrders();
     }
 
 
@@ -65,7 +67,7 @@ public class OrderController {
     @SuppressWarnings("NullableProblems")
     @GetMapping("/{id}")
     public ResponseEntity<OrderResponse> getOrder(@PathVariable Long id){
-        Optional<Order> orderFindById = createOrderUseCase.getOrderById(id);
+        Optional<Order> orderFindById = orderService.getOrderById(id);
         return orderFindById.map( order -> ResponseEntity.ok(mapper.toResponse(order)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -81,7 +83,7 @@ public class OrderController {
     @SuppressWarnings("NullableProblems")
     @PatchMapping("/{id}/items")
     public ResponseEntity<OrderResponse> addOrderItem(@PathVariable Long id, @RequestBody OrderItemRequest request){
-        Optional<Order> orderFindById = createOrderUseCase.getOrderById(id);
+        Optional<Order> orderFindById = orderService.getOrderById(id);
         return orderFindById.map(order -> ResponseEntity.ok
                                                 (mapper.toResponse(addItemUseCase.addOrderItem(order, request))))
                             .orElseGet(() -> ResponseEntity.notFound().build());
@@ -92,7 +94,7 @@ public class OrderController {
     @SuppressWarnings("NullableProblems")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long id){
-        createOrderUseCase.deleteOrder(id);
+        orderService.deleteOrder(id);
         return ResponseEntity.noContent().build();
     }
 
@@ -107,7 +109,7 @@ public class OrderController {
     @SuppressWarnings("NullableProblems")
     @PatchMapping("/{id}/confirm")
     public ResponseEntity<OrderResponse> confirmOrder(@PathVariable Long id, @RequestBody ConfirmOrderRequest request){
-        Optional<Order> orderFindById = createOrderUseCase.getOrderById(id);
+        Optional<Order> orderFindById = orderService.getOrderById(id);
         return orderFindById.map(order -> ResponseEntity.ok
                                                 (mapper.toResponse(confirmOrderUseCase.confirmOrder(order, request))))
                             .orElseGet(() -> ResponseEntity.notFound().build());
@@ -116,7 +118,7 @@ public class OrderController {
     @SuppressWarnings("NullableProblems")
     @PatchMapping("/{id}/cancel")
     public ResponseEntity<OrderResponse> cancelOrder(@PathVariable Long id){
-        Optional<Order> orderFindById = createOrderUseCase.getOrderById(id);
+        Optional<Order> orderFindById = orderService.getOrderById(id);
         return orderFindById.map(order -> ResponseEntity.ok
                                                (mapper.toResponse(cancelOrderUseCase.cancelOrder(order))))
                             .orElseGet(() -> ResponseEntity.notFound().build());
@@ -125,7 +127,7 @@ public class OrderController {
     @SuppressWarnings("NullableProblems")
     @PatchMapping("/{id}/modify")
     public ResponseEntity<OrderResponse> modifyOrder(@PathVariable Long id, @RequestBody ModifyOrderItemRequest request){
-        Optional<Order> orderFindById = createOrderUseCase.getOrderById(id);
+        Optional<Order> orderFindById = orderService.getOrderById(id);
         return orderFindById.map(order -> ResponseEntity.ok(
                                                 mapper.toResponse(modifyOrderUserCase.modifyOrder
                                                                  (order, request.idOrderItem(), request.quantity()))))
