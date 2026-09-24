@@ -1,6 +1,8 @@
 package commercePlatform.userService.exception;
 
-public class UserNotFoundException extends RuntimeException {
+import commercePlatform.exceptions.ResourceNotFoundException;
+
+public class UserNotFoundException extends ResourceNotFoundException {
     public UserNotFoundException(Long idUser) {
         super("Not found a user with id: " + idUser);
     }
