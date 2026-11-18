@@ -1,5 +1,6 @@
 package commercePlatform.orderService.domain.gateway;
 
+import commercePlatform.orderService.domain.OrderStatus;
 import commercePlatform.orderService.domain.model.Order;
 import java.util.List;
 import java.util.Optional;
@@ -10,4 +11,5 @@ public interface OrderGateway {
     Optional<Order> findById(Long id);
     List<Order> getAllOrders();
     void deleteOrder(Long id);
+    List<Order> findByStatus(OrderStatus status);
 }

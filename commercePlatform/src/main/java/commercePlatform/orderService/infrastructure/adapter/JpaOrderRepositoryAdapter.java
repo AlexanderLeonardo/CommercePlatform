@@ -1,5 +1,6 @@
 package commercePlatform.orderService.infrastructure.adapter;
 
+import commercePlatform.orderService.domain.OrderStatus;
 import commercePlatform.orderService.domain.gateway.OrderGateway;
 import commercePlatform.orderService.domain.model.Order;
 import commercePlatform.orderService.infrastructure.entity.OrderEntity;
@@ -43,5 +44,12 @@ public class JpaOrderRepositoryAdapter implements OrderGateway {
     @Override
     public void deleteOrder(Long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<Order> findByStatus(OrderStatus status) {
+        return getAllOrders().stream()
+                .filter(order -> order.getStatus().equals(status))
+                .toList();
     }
 }

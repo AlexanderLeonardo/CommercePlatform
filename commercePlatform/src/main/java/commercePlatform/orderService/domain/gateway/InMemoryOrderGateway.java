@@ -1,5 +1,6 @@
 package commercePlatform.orderService.domain.gateway;
 
+import commercePlatform.orderService.domain.OrderStatus;
 import commercePlatform.orderService.domain.model.Order;
 import commercePlatform.orderService.exception.OrderNotFoundException;
 
@@ -35,6 +36,13 @@ public class InMemoryOrderGateway implements OrderGateway {
     public void deleteOrder(Long id) {
         Order order = findById(id).orElseThrow(() -> new OrderNotFoundException(id));
         orders.remove(order);
+    }
+
+    @Override
+    public List<Order> findByStatus(OrderStatus status) {
+        return getAllOrders().stream()
+                .filter(order -> order.getStatus().equals(status))
+                .toList();
     }
 
 }

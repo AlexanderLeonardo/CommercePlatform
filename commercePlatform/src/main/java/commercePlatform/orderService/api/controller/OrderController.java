@@ -6,6 +6,7 @@ import commercePlatform.orderService.api.dto.request.ModifyOrderItemRequest;
 import commercePlatform.orderService.api.dto.request.OrderItemRequest;
 import commercePlatform.orderService.api.dto.response.OrderResponse;
 import commercePlatform.orderService.api.mapper.OrderMapper;
+import commercePlatform.orderService.domain.OrderStatus;
 import commercePlatform.orderService.domain.model.Order;
 import commercePlatform.orderService.service.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -132,5 +133,13 @@ public class OrderController {
                                                 mapper.toResponse(modifyOrderUserCase.modifyOrder
                                                                  (order, request.idOrderItem(), request.quantity()))))
                             .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping(params = "status")
+    public List<OrderResponse> filterOrdersByState(@RequestParam("status") OrderStatus status){
+        return orderService.findByStatus(status)
+                .stream()
+                .map(mapper::toResponse)
+                .toList();
     }
 }

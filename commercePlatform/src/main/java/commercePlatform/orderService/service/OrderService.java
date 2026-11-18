@@ -1,5 +1,6 @@
 package commercePlatform.orderService.service;
 
+import commercePlatform.orderService.domain.OrderStatus;
 import commercePlatform.orderService.domain.gateway.OrderGateway;
 import commercePlatform.orderService.domain.model.Order;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,9 @@ public class OrderService {
 
     public void deleteOrder(Long orderId){
         this.orderGateway.deleteOrder(orderId);
+    }
+
+    public List<Order> findByStatus(OrderStatus status) {
+        return this.orderGateway.findByStatus(status);
     }
 }
