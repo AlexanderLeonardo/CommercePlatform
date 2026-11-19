@@ -37,12 +37,4 @@ public class InMemoryOrderGateway implements OrderGateway {
         Order order = findById(id).orElseThrow(() -> new OrderNotFoundException(id));
         orders.remove(order);
     }
-
-    @Override
-    public List<Order> findByStatus(OrderStatus status) {
-        return getAllOrders().stream()
-                .filter(order -> order.getStatus().equals(status))
-                .toList();
-    }
-
 }

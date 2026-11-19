@@ -11,5 +11,4 @@ public interface OrderGateway {
     Optional<Order> findById(Long id);
     List<Order> getAllOrders();
     void deleteOrder(Long id);
-    List<Order> findByStatus(OrderStatus status);
 }

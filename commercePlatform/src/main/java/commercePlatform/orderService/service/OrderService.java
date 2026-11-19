@@ -30,6 +30,8 @@ public class OrderService {
     }
 
     public List<Order> findByStatus(OrderStatus status) {
-        return this.orderGateway.findByStatus(status);
+        return getAllOrders().stream()
+                .filter(order -> order.getStatus().equals(status))
+                .toList();
     }
 }
